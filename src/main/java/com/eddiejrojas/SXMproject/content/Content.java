@@ -1,11 +1,11 @@
-package com.eddiejrojas.SXMproject.models;
+package com.eddiejrojas.SXMproject.content;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Content {
+class Content {
     private @Id @GeneratedValue Long id;
     private String title;
     private String description;

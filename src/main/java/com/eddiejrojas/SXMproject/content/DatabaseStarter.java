@@ -1,4 +1,4 @@
-package com.eddiejrojas.SXMproject.models;
+package com.eddiejrojas.SXMproject.content;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

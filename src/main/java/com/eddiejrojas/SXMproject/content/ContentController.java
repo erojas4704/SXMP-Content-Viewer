@@ -1,7 +1,5 @@
-package com.eddiejrojas.SXMproject.controllers;
+package com.eddiejrojas.SXMproject.content;
 
-import com.eddiejrojas.SXMproject.models.Content;
-import com.eddiejrojas.SXMproject.models.ContentRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
