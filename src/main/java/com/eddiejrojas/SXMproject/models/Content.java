@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-class Content {
+public class Content {
     private @Id @GeneratedValue Long id;
     private String title;
     private String description;
@@ -44,6 +44,11 @@ class Content {
 
     public String getImageURL(){
         return this.imageURL;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s: %s", this.title, this.description);
     }
 
 }

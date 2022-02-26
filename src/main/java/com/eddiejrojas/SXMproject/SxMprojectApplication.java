@@ -12,7 +12,6 @@ public class SxMprojectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SxMprojectApplication.class, args);
-		System.out.println("WHY DID YOU LEAVE ME");
 	}
 
 }
