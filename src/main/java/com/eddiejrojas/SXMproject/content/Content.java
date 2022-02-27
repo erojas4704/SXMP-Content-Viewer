@@ -46,9 +46,32 @@ class Content {
         return this.imageURL;
     }
 
+    public void setId(Long value){
+        this.id = value;
+    }
+
+    public void setTitle(String value){
+        this.title = value;
+    }
+
+    public void setDescription(String value){
+        this.description = value;
+    }
+
+    public void setSource(String value){
+        this.source = value;
+    }
+
+    public void setAudioURL(String value){
+        this.audioURL = value;
+    }
+
+    public void setImageURL(String value){
+        this.imageURL = value;
+    }
+
     @Override
     public String toString(){
         return String.format("%s: %s", this.title, this.description);
     }
-
 }
