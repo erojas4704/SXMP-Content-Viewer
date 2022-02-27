@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/content")
 class ContentController {
     private final ContentRepository repository;
     private final ContentModelAssembler assembler;
@@ -22,7 +23,7 @@ class ContentController {
         this.assembler = assembler;
     }
 
-    @GetMapping("/content")
+    @GetMapping("/")
     CollectionModel<EntityModel<Content>> all() {
         List<EntityModel<Content>> content = repository.findAll().stream()
                 .map(assembler::toModel)
@@ -32,7 +33,7 @@ class ContentController {
                 linkTo(methodOn(ContentController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/content/{id}")
+    @GetMapping("/{id}")
     EntityModel<Content> one(@PathVariable Long id){
         Content content = repository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
@@ -40,7 +41,7 @@ class ContentController {
         return assembler.toModel(content);
     }
 
-    @PostMapping("/content")
+    @PostMapping("/")
     ResponseEntity<?> newContent(@RequestBody Content newContent){
         EntityModel<Content> entityModel = assembler.toModel(repository.save(newContent));
         return ResponseEntity
@@ -48,7 +49,7 @@ class ContentController {
                 .body(entityModel);
     }
 
-    @PutMapping("/content/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<?> replaceContent(@RequestBody Content newContent, @PathVariable Long id){
         Content updatedContent = repository.findById(id)
                 .map(content -> {
@@ -70,7 +71,7 @@ class ContentController {
                 .body(entityModel);
     }
 
-    @DeleteMapping("/content/{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<?> deleteContent(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
