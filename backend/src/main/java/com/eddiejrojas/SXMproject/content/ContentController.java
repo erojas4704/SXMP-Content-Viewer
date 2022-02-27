@@ -23,7 +23,7 @@ class ContentController {
         this.assembler = assembler;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     CollectionModel<EntityModel<Content>> all() {
         List<EntityModel<Content>> content = repository.findAll().stream()
                 .map(assembler::toModel)
@@ -41,7 +41,7 @@ class ContentController {
         return assembler.toModel(content);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     ResponseEntity<?> newContent(@RequestBody Content newContent){
         EntityModel<Content> entityModel = assembler.toModel(repository.save(newContent));
         return ResponseEntity
