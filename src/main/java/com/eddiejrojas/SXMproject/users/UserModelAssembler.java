@@ -7,10 +7,10 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserModelAssembler implements RepresentationModelAssembler<User, EntityModel<User>> {
+class UserModelAssembler implements RepresentationModelAssembler<UserProfile, EntityModel<UserProfile>> {
 
     @Override
-    public EntityModel<User> toModel(User user){
+    public EntityModel<UserProfile> toModel(UserProfile user){
         return EntityModel.of(user);
     }
 }

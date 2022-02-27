@@ -1,4 +1,4 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/content").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/users").hasAnyRole("ADMIN");
+                ;//.antMatchers("/users").hasAnyRole("ADMIN");
         http.csrf().disable();
     }
 }

@@ -12,51 +12,62 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length=24, nullable = false)
+    @Column(length = 24, nullable = false)
     private String username;
-    @Column(length=48, nullable = false)
+    @Column(length = 48, nullable = false)
     private String email;
-    @Column(length=128, nullable = false)
+    @Column(length = 128, nullable = false)
     private String password;
     private Role role;
 
-    public User(){}
-    public User(String username, String email, String password){
+    @Column
+    private String avatarURL;
+
+    public User() {}
+
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId(){
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Long value){
+    public void setId(Long value) {
         this.id = value;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
 
-    public void setPassword(String value){
-        this.password = value;
-    }
-
-    public String getPassword(){
-        return this.password;
-    }
-
-
-    public void setUsername(String value){
+    public void setUsername(String value) {
         this.username = value;
     }
 
-    public String getEmail(){
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String value) {
+        this.password = value;
+    }
+
+    public String getEmail() {
         return this.email;
     }
 
-    public void setEmail(String value){
+    public void setEmail(String value) {
         this.email = value;
+    }
+
+    public String getAvatarURL() {
+        return this.avatarURL;
+    }
+
+    public void setAvatarURL(String value) {
+        this.avatarURL = value;
     }
 }
