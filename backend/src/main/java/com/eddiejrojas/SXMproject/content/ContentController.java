@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,28 +25,23 @@ class ContentController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<Content>> all() {
-        List<EntityModel<Content>> content = repository.findAll().stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
-
-        return CollectionModel.of(content,
-                linkTo(methodOn(ContentController.class).all()).withSelfRel());
+    List<Content> all() {
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    EntityModel<Content> one(@PathVariable Long id){
+    Content one(@PathVariable Long id){
         Content content = repository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
 
-        return assembler.toModel(content);
+        return content;
     }
 
     @PostMapping("")
     ResponseEntity<?> newContent(@RequestBody Content newContent){
         EntityModel<Content> entityModel = assembler.toModel(repository.save(newContent));
         return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .created(URI.create("")) //TODO reconsider our links
                 .body(entityModel);
     }
 
