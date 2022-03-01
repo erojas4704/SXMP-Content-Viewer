@@ -1,0 +1,40 @@
+.content-preview {
+  min-width: 300px;
+  height: 300px;
+  flex: 1 1 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  text-align: left;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 90%
+  );
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
+.content-head {
+  flex-grow: 1;
+}
+
+
+.content-title {
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+}
+
+.content-description {
+  color: white;
+}
+
+.content-expander{
+  color: white;
+  text-align: center;
+}

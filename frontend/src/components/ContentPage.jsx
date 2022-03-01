@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Api from "../Api";
 import { getAllContent } from "../reducers/contentSlice";
+import ContentPreview from "./ContentPreview";
+import "./css/Content.css";
 
 const ContentPage = () => {
   const dispatch = useDispatch();
@@ -13,14 +14,15 @@ const ContentPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Content Page</h1>
-      {content.content.map((c) => {
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+      }}
+    >
+      {content.content.map((content) => {
         return (
-          <div key={c.id}>
-            <h5>{c.title}</h5>
-            <div>{c.description}</div>
-          </div>
+          <ContentPreview key={content.id} content={content}></ContentPreview>
         );
       })}
     </div>
