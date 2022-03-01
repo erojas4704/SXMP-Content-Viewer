@@ -1,0 +1,8 @@
+.nav {
+  height: 3rem;
+  background-color: black;
+  color: white;
+  display: flex;
+  
+  padding: 4px 1rem 4px 1rem;
+}

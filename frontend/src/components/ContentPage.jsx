@@ -12,6 +12,7 @@ const ContentPage = () => {
     dispatch(getAllContent());
   }, [dispatch]);
 
+
   return (
     <div
       style={{

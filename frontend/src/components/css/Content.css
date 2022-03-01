@@ -39,4 +39,5 @@
 .content-expander{
   color: white;
   text-align: center;
+  grid-area: 1/1;
 }

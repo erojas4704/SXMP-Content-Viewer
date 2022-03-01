@@ -1,0 +1,16 @@
+.nav-search-input {
+    outline: none;
+    border-width: 0;
+    background: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.inline-search-form{
+    display: inline;
+    cursor: text;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 2rem 0 2rem;
+}
