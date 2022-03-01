@@ -1,13 +1,12 @@
 const axios = require("axios");
+const client = axios.create({
+  baseURL: "/api",
+});
 
 export default class Api {
-  static client = axios.create({
-    baseURL: "/api",
-  });
-
   static async getAllContent() {
     try {
-      const response = await this.client.get("/content");
+      const response = await client.get("/content");
       return response.data;
     } catch (err) {
       console.log(err);
@@ -17,7 +16,7 @@ export default class Api {
 
   static async getContent(id) {
     try {
-      const response = await this.client.get("/content", { params: { id } });
+      const response = await client.get("/content", { params: { id } });
       return response.data;
     } catch (err) {
       console.error(err);

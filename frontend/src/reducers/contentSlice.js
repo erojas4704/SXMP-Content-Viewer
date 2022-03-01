@@ -4,7 +4,7 @@ import Api from "../Api";
 export const getAllContent = createAsyncThunk(
   "content/getAllContent",
   async () => {
-    return Api.getAllContent();
+    return await Api.getAllContent();
   }
 );
 
@@ -17,15 +17,15 @@ export const contentSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllContent.fulfilled, (state, action) => {
-        state.content.content = action.payload;
-        state.content.status = "fulfilled";
+        state.content = action.payload;
+        state.status = "fulfilled";
       })
       .addCase(getAllContent.pending, (state, action) => {
-        state.content.status = "pending";
+        state.status = "pending";
       })
       .addCase(getAllContent.rejected, (state, action) => {
-        state.content.status = "error";
-        state.content.error = action.payload;
+        state.status = "error";
+        state.error = action.payload;
       });
   },
 });
