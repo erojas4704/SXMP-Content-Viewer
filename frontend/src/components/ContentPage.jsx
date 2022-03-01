@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllContent } from "../reducers/contentSlice";
+import { getAllContent } from "../redux/content/contentSlice";
 import ContentPreview from "./ContentPreview";
 import "./css/Content.css";
 
@@ -19,9 +19,9 @@ const ContentPage = () => {
         flexWrap: "wrap",
       }}
     >
-      {content.content.map((content) => {
+      {content && content.content.map((data) => {
         return (
-          <ContentPreview key={content.id} content={content}></ContentPreview>
+          <ContentPreview key={data.id} content={data}></ContentPreview>
         );
       })}
     </div>

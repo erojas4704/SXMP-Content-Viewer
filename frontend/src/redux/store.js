@@ -5,7 +5,7 @@ import persistStore from "redux-persist/es/persistStore";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
-import rootReducer from "./reducers/rootReducer";
+import rootReducer from "./rootReducer";
 
 export const persistedReducer = persistReducer(
   {
