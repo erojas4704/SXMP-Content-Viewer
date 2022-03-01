@@ -4,6 +4,8 @@
   flex: 1 1 0px;
   display: flex;
   flex-direction: column;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .content-container {
@@ -26,7 +28,7 @@
 
 .content-title {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   color: white;
 }
 

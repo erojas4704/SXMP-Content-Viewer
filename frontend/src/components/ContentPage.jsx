@@ -10,7 +10,6 @@ const ContentPage = () => {
 
   useEffect(() => {
     dispatch(getAllContent());
-    // Api.getAllContent();
   }, [dispatch]);
 
   return (

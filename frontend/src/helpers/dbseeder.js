@@ -144,6 +144,22 @@ const podcasts = [
   },
 ];
 
-export const seedPodcasts = async () => {
-    podcasts.forEach(content => Api.createContent(content));
+export const seedPodcasts = async (existing) => {
+
+    const hash = existing.reduce((acc, p) => {
+        acc[p.title] = p;
+        return acc;
+    }, {});
+
+    const proc = podcasts.map(podcast => {
+        return {
+            ...podcast,
+            audioURL: podcast.audio,
+            imageURL: podcast.image,
+            id: hash[podcast.title]? hash[podcast.title].id : null,
+        }
+    })
+
+    console.log("seeding with ", proc);
+    proc.forEach(content => Api.updateContent(content.id, content));
 }
