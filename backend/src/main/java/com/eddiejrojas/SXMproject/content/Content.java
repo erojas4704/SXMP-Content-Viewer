@@ -1,15 +1,18 @@
 package com.eddiejrojas.SXMproject.content;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "content",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "id")
+        })
 class Content {
-    private @Id
-    @GeneratedValue
-    Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
+    @Column(columnDefinition = "text")
     private String description;
     private String name;
     private String source;

@@ -26,7 +26,6 @@
   flex-grow: 1;
 }
 
-
 .content-title {
   font-weight: bold;
   font-size: 18px;
@@ -37,17 +36,31 @@
   color: white;
 }
 
-.content-expander{
+.content-extra {
+  position: relative;
+  color: white;
+  height: 0px;
+  opacity: 0;
+  transition: all 0.35s ease-out;
+}
+.content-extra.expanded {
+  transition: all 0.35s ease-out;
+  height: 240px;
+  opacity: 1;
+}
+
+.content-expander {
   color: white;
   text-align: center;
   grid-area: 1/1;
   position: relative;
   color: white;
   height: 0px;
+  opacity: 0;
+  transition: all 0.35s linear;
 }
-
-.content-extra{
-  position: relative;
-  color: white;
-  height: 0px;
+.content-expander.hover {
+  opacity: 1;
+  height: 5px;
+  transition: all 0.15s linear;
 }
