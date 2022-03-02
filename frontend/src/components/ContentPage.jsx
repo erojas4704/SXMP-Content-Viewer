@@ -12,9 +12,6 @@ const ContentPage = () => {
     dispatch(getAllContent());
   }, [dispatch]);
 
-  
-
-
   return (
     <div
       style={{
@@ -22,7 +19,7 @@ const ContentPage = () => {
         flexWrap: "wrap",
       }}
     >
-      {content && content.content.map((data) => {
+      {content.status === "fulfilled" && content.content.map((data) => {
         return (
           <ContentPreview key={data.id} content={data}></ContentPreview>
         );

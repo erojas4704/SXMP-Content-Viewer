@@ -1,11 +1,7 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 const ContentDescription = ({ title, description, expanded, hover }) => {
-  const contentRef = useRef();
-  const caretRef = useRef();
 
   // useEffect(() => {
   //   if (expanded) {
@@ -28,17 +24,17 @@ const ContentDescription = ({ title, description, expanded, hover }) => {
   //   }
   // }, [hover, expanded]);
 
-  const mouseOverClass = hover ? "hover" : "";
+  const mouseOverClass = hover || expanded ? "hover" : "";
   const expandedClass = expanded ? "expanded" : "";
 
   return (
     <div className="content-container" style={{ overflow: "hidden" }}>
       <div className="content-title">{title}</div>
 
-      <div className={`content-extra ${expandedClass}`} ref={contentRef}>
+      <div className={`content-extra ${expandedClass}`}>
         {description}
       </div>
-      <div className={`content-expander ${mouseOverClass}`} ref={caretRef}>
+      <div className={`content-expander ${mouseOverClass}`}>
         <FontAwesomeIcon icon={expanded ? faCaretDown : faCaretUp} />
       </div>
     </div>

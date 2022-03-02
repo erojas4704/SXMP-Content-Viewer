@@ -15,32 +15,17 @@ export default class Api {
   }
 
   static async updateContent(id, content) {
-    try {
-      const response = await client.put(`/content/${id}`, content);
-      return response.data;
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
+    const response = await client.put(`/content/${id}`, content);
+    return response.data;
   }
 
   static async getAllContent() {
-    try {
-      const response = await client.get("/content");
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return err;
-    }
+    const response = await client.get("/content");
+    return response.data;
   }
 
   static async getContent(id) {
-    try {
-      const response = await client.get(`/content/${id}`);
-      return response.data;
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
+    const response = await client.get(`/content/${id}`);
+    return response.data;
   }
 }
