@@ -19,10 +19,8 @@ const ContentPage = () => {
         flexWrap: "wrap",
       }}
     >
-      {content.status === "fulfilled" && content.content.map((data) => {
-        return (
-          <ContentPreview key={data.id} content={data}></ContentPreview>
-        );
+      {content.content.map((data) => {
+        return <ContentPreview key={data.id} content={data}></ContentPreview>;
       })}
     </div>
   );

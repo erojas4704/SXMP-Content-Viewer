@@ -1,0 +1,10 @@
+.playhead {
+  position: fixed;
+  bottom: 0;
+  height: 2rem;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
