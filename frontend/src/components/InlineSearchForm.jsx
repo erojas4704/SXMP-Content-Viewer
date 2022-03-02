@@ -9,7 +9,6 @@ const InlineSearchForm = ({ onSubmit }) => {
 
   const handleClick = (e) => {
     inputRef.current.focus();
-    console.log("CLICKITY CLACKITY");
   }
 
   const handleSubmit = (e) => {

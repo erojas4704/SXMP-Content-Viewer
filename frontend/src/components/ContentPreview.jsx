@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ContentDescription from "./ContentDescription";
 const placeholderColors = [
   "#34495e",
@@ -16,21 +17,42 @@ const getRandomColor = () => {
 };
 
 const ContentPreview = ({ content }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [hover, setHover] = useState(false);
+
   const backgroundStyle = {
     backgroundImage: `url(${content.imageURL})`,
     backgroundColor: `${content.imageURL ? null : getRandomColor()}`,
   };
 
+  const handleClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
+
   return (
-    <>
-      <div className="content-preview" style={backgroundStyle}>
-        <div className="content-head" />
-        <ContentDescription
-          title={content.title}
-          description={content.description}
-        />
-      </div>
-    </>
+    <div
+      className="content-preview"
+      style={backgroundStyle}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="content-head" />
+      <ContentDescription
+        title={content.title}
+        description={content.description}
+        expanded={expanded}
+        hover={hover}
+      />
+    </div>
   );
 };
 

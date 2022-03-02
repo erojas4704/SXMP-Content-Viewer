@@ -6,6 +6,7 @@
   flex-direction: column;
   background-size: cover;
   background-repeat: no-repeat;
+  /* cursor: pointer; */
 }
 
 .content-container {
@@ -40,4 +41,13 @@
   color: white;
   text-align: center;
   grid-area: 1/1;
+  position: relative;
+  color: white;
+  height: 0px;
+}
+
+.content-extra{
+  position: relative;
+  color: white;
+  height: 0px;
 }
