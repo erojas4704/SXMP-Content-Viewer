@@ -5,10 +5,8 @@ import Timeline from "./Timeline";
 const Playhead = ({}) => {
   return (
     <div className="playhead">
-      <div className="playhead-bar">
-          <PlayButton />
-          <Timeline />
-      </div>
+      <PlayButton />
+      <Timeline />
     </div>
   );
 };

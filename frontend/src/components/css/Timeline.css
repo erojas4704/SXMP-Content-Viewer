@@ -1,5 +1,22 @@
+.timeline{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+
 .timeline-bar{
     width: 100%;
     height: 2px;
     background-color: #09192f;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.timeline-time{
+    color: white;
+    white-space: nowrap;
+    font-size: 8pt;
 }
