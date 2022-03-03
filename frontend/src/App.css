@@ -1,8 +1,13 @@
-.container{
+.container {
   position: relative;
   background-color: black;
 }
 
-.main{
+.main {
   padding-top: 3rem;
+}
+
+.playhead-main {
+  position: fixed;
+  bottom: 0;
 }

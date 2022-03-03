@@ -161,5 +161,5 @@ export const seedPodcasts = async (existing) => {
     })
 
     console.log("seeding with ", proc);
-    proc.forEach(content => Api.updateContent(content.id, content));
+    proc.forEach(content => Api.createContent(content));
 }

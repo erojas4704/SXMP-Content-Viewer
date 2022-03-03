@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ContentDescription from "./ContentDescription";
+import Playhead from "./Playhead";
 const placeholderColors = [
   "#34495e",
   "#2c3e50",
@@ -22,6 +23,7 @@ const ContentPreview = ({ content }) => {
 
   const backgroundStyle = {
     backgroundImage: `url(${content.imageURL})`,
+    backgroundPosition: "center",
     backgroundColor: `${content.imageURL ? null : getRandomColor()}`,
   };
 
@@ -41,7 +43,6 @@ const ContentPreview = ({ content }) => {
     <div
       className="content-preview"
       style={backgroundStyle}
-      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -50,8 +51,10 @@ const ContentPreview = ({ content }) => {
         title={content.title}
         description={content.description}
         expanded={expanded}
+        onClick={handleClick}
         hover={hover}
       />
+      {expanded && <Playhead content={content} />}
     </div>
   );
 };
