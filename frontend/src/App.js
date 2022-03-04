@@ -43,7 +43,7 @@ function App() {
    * Toggles an audio file. If it's already playing, we will pause it.
    * If it's not, we will replace the currently playing audio with this one.
    * @param {Audio} audio The audio to play.
-   * @param {Object} contentData The content data that is being played. This will be used for our marquee.
+   * @param {Object} contentData The content data that is being played. This will be used for our marquee. 
    */
   const toggleAudio = (audioToPlay, contentData) => {
     console.log(audio, audioToPlay, audio === audioToPlay);
