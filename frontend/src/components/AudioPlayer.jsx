@@ -17,7 +17,6 @@ const AudioPlayer = ({ children }) => {
   };
 
   const pause = () => {
-    console.log("Needs to pause");
     if (audio) audio.pause();
     setIsPlaying(false);
   };

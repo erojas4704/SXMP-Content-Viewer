@@ -1,22 +1,29 @@
 import "./App.css";
 import ContentPage from "./components/ContentPage";
-import Playhead from "./components/Playhead";
 import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
-import Marquee from "./components/Marquee";
 import AudioPlayer from "./components/AudioPlayer";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AboutPage from "./pages/AboutPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
-
   return (
     <div className="App">
       <div className="container">
-        <Navbar />
-        <AudioPlayer>
-          <div className="main">
-            <ContentPage />
-          </div>
-        </AudioPlayer>
+        <Router>
+          <Navbar />
+          <AudioPlayer>
+            <div className="main">
+              <Routes>
+                <Route path="/" exact element={<ContentPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+              </Routes>
+            </div>
+          </AudioPlayer>
+        </Router>
       </div>
     </div>
   );
