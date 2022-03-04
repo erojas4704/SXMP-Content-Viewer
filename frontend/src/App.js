@@ -46,7 +46,7 @@ function App() {
    * @param {Object} contentData The content data that is being played. This will be used for our marquee. 
    */
   const toggleAudio = (audioToPlay, contentData) => {
-    console.log(audio, audioToPlay, audio === audioToPlay);
+    setCurrentContent(contentData);
     if (audio === audioToPlay && isPlaying) pause();
     else play(audioToPlay);
   };

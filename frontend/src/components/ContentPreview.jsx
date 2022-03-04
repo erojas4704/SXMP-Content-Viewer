@@ -69,7 +69,7 @@ const ContentPreview = ({ content }) => {
       {expanded && (
         <Playhead
           content={content}
-          onToggle={() => toggleAudio(audio)}
+          onToggle={() => toggleAudio(audio, content)}
           audio={audio}
         />
       )}
