@@ -11,6 +11,8 @@ function App() {
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  //TODO move all this playhead stuff to an HOC
+
   useEffect(() => {
     if (audio) {
       isPlaying ? audio.play() : audio.pause();
@@ -29,13 +31,25 @@ function App() {
     setIsPlaying(true);
     audioToPlay.play();
     setAudio(audioToPlay);
-  }
+  };
 
   const pause = () => {
     console.log("Needs to pause");
-    if(audio) audio.pause();
+    if (audio) audio.pause();
     setIsPlaying(false);
-  }
+  };
+
+  /**
+   * Toggles an audio file. If it's already playing, we will pause it.
+   * If it's not, we will replace the currently playing audio with this one.
+   * @param {Audio} audio The audio to play.
+   * @param {Object} contentData The content data that is being played. This will be used for our marquee.
+   */
+  const toggleAudio = (audioToPlay, contentData) => {
+    console.log(audio, audioToPlay, audio === audioToPlay);
+    if (audio === audioToPlay && isPlaying) pause();
+    else play(audioToPlay);
+  };
 
   return (
     <div className="App">
@@ -47,7 +61,8 @@ function App() {
           setIsPlaying,
           audio,
           play,
-          pause
+          pause,
+          toggleAudio,
         }}
       >
         <div className="container">
@@ -58,6 +73,7 @@ function App() {
               className="playhead-main"
               content={currentContent}
               audio={audio}
+              onToggle={() => toggleAudio(audio, currentContent)}
             />
           </div>
         </div>

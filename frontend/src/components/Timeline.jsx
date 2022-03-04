@@ -2,7 +2,7 @@ import "./css/Timeline.css";
 import moment from "moment";
 
 const fromSecondsToMS = (time) => {
-  if (time === undefined) return "--:--";
+  if (time === undefined || isNaN(time)) return "--:--";
   const parsedTime = moment.utc(time * 1000).format("mm:ss");
   return parsedTime;
 };

@@ -27,24 +27,18 @@ const ContentPreview = ({ content }) => {
   const [audio, setAudio] = useState(null);
   const [status, setStatus] = useState("idle");
 
-  const { play, pause } = useContext(NowPlayingContext);
-
-  const handleToggle = () => {
-    if (!audio || audio.paused) play(audio);
-    else pause();
-  };
+  const { toggleAudio } = useContext(NowPlayingContext);
 
   const onMetadata = (e) => {
     setStatus("fulfilled");
   };
 
   useEffect(() => {
-    if (!audio) {
+    if (!audio && expanded) {
       const audio = new Audio(content.audioURL);
       setAudio(audio);
       audio.addEventListener("loadedmetadata", onMetadata);
       setStatus("pending");
-      console.log("SHOULD LOAD METADATA");
 
       return () => {
         //On dismount, remove event listeners.
@@ -75,10 +69,8 @@ const ContentPreview = ({ content }) => {
       {expanded && (
         <Playhead
           content={content}
-          onToggle={handleToggle}
-          currentTime={audio?.currentTime}
-          duration={audio?.duration}
-          isPlaying={audio && !audio.paused}
+          onToggle={() => toggleAudio(audio)}
+          audio={audio}
         />
       )}
     </div>

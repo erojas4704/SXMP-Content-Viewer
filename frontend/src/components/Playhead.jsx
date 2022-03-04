@@ -4,8 +4,15 @@ import PlayButton from "./PlayButton";
 import Timeline from "./Timeline";
 
 const Playhead = (props) => {
-  const { onToggle, currentTime, duration, isPlaying } = props;
+  const { onToggle, audio } = props;
+  const isPlaying = audio && !audio.paused;
+  const { currentTime, duration } = audio || {};
   const [seconds, setSeconds] = useState(currentTime);
+
+
+  useEffect(() => {
+    if (audio) setSeconds(audio.currentTime);
+  }, [audio]);
 
   useEffect(() => {
     if (isPlaying) {
