@@ -1,3 +1,9 @@
+import {
+  faSquarePlus,
+  faThumbsDown,
+  faThumbsUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import "./css/Playhead.css";
 import PlayButton from "./PlayButton";
@@ -8,7 +14,6 @@ const Playhead = (props) => {
   const isPlaying = audio && !audio.paused;
   const { currentTime, duration } = audio || {};
   const [seconds, setSeconds] = useState(currentTime);
-
 
   useEffect(() => {
     if (audio) setSeconds(audio.currentTime);
@@ -30,6 +35,15 @@ const Playhead = (props) => {
     <div {...props} className={"playhead " + (props.className || "")}>
       <PlayButton onClick={onToggle} isPlaying={isPlaying} />
       <Timeline currentTime={seconds} duration={duration} />
+      <FontAwesomeIcon
+        style={{ paddingLeft: "5px", paddingRight: "5px" }}
+        icon={faThumbsUp}
+        color={"white"}
+        size={"xl"}
+      />
+      {/* I don't like these thumb icons */}
+      <FontAwesomeIcon style={{ paddingLeft: "5px", paddingRight: "5px" }} icon={faThumbsDown} color={"white"} size={"xl"} />
+      <FontAwesomeIcon style={{ paddingLeft: "5px", paddingRight: "5px" }} icon={faSquarePlus} color={"white"} size={"xl"} />
     </div>
   );
 };

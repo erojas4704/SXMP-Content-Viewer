@@ -4,6 +4,7 @@ import Playhead from "./components/Playhead";
 import Navbar from "./components/Navbar";
 import PlayingContext from "./contexts/NowPlayingContext";
 import { useEffect, useState } from "react";
+import Marquee from "./components/Marquee";
 
 function App() {
   //TODO condense all this into a custom hook.
@@ -12,19 +13,12 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   //TODO move all this playhead stuff to an HOC
-
   useEffect(() => {
     if (audio) {
       isPlaying ? audio.play() : audio.pause();
     }
   }, [isPlaying, audio]);
 
-  // useEffect(() => {
-  //   if (audio) audio.pause();
-  //   if (currentContent) {
-  //     setAudio(currentContent.audio);
-  //   }
-  // }, [currentContent]);
 
   const play = (audioToPlay) => {
     pause();
@@ -43,7 +37,7 @@ function App() {
    * Toggles an audio file. If it's already playing, we will pause it.
    * If it's not, we will replace the currently playing audio with this one.
    * @param {Audio} audio The audio to play.
-   * @param {Object} contentData The content data that is being played. This will be used for our marquee. 
+   * @param {Object} contentData The content data that is being played. This will be used for our marquee.
    */
   const toggleAudio = (audioToPlay, contentData) => {
     setCurrentContent(contentData);
@@ -69,12 +63,14 @@ function App() {
           <Navbar />
           <div className="main">
             <ContentPage />
-            <Playhead
-              className="playhead-main"
-              content={currentContent}
-              audio={audio}
-              onToggle={() => toggleAudio(audio, currentContent)}
-            />
+            <div className="bottom-bar">
+              <Marquee show={audio !== undefined} text={currentContent?.title} />
+              <Playhead
+                content={currentContent}
+                audio={audio}
+                onToggle={() => toggleAudio(audio, currentContent)}
+              />
+            </div>
           </div>
         </div>
       </PlayingContext.Provider>

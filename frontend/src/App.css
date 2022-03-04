@@ -5,10 +5,11 @@
 
 .main {
   padding-top: 3rem;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 }
 
-.playhead-main {
+.bottom-bar {
   position: fixed;
   bottom: 0;
+  width: 100%;
 }
