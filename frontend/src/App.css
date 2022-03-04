@@ -1,15 +1,12 @@
-.container {
-  position: relative;
-  background-color: black;
-}
-
-body{
-  background-color: black;
+html,
+body {
+  height: 100%;
 }
 
 .main {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  height: 100vh;
 }
 
 .bottom-bar {

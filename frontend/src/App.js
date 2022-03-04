@@ -1,4 +1,5 @@
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ContentPage from "./components/ContentPage";
 import Navbar from "./components/Navbar";
 import AudioPlayer from "./components/AudioPlayer";
@@ -10,7 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 function App() {
   return (
     <div className="App">
-      <div className="container">
+      <div>
         <Router>
           <Navbar />
           <AudioPlayer>
