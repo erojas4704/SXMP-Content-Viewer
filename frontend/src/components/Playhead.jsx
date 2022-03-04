@@ -32,23 +32,33 @@ const Playhead = (props) => {
   }, [isPlaying]);
 
   const onScrub = (scrubTime) => {
-    if(audio) audio.currentTime = scrubTime;
+    if (audio) audio.currentTime = scrubTime;
     setSeconds(scrubTime);
-  }
+  };
 
   return (
     <div {...props} className={"playhead " + (props.className || "")}>
       <PlayButton onClick={onToggle} isPlaying={isPlaying} />
-      <Timeline currentTime={seconds} duration={duration} onScrub={onScrub}/>
-      <FontAwesomeIcon
+      <Timeline currentTime={seconds} duration={duration} onScrub={onScrub} />
+      {/* I don't like these thumb icons */}
+      {/* <FontAwesomeIcon
         style={{ paddingLeft: "5px", paddingRight: "5px" }}
         icon={faThumbsUp}
         color={"white"}
         size={"xl"}
       />
-      {/* I don't like these thumb icons */}
-      <FontAwesomeIcon style={{ paddingLeft: "5px", paddingRight: "5px" }} icon={faThumbsDown} color={"white"} size={"xl"} />
-      <FontAwesomeIcon style={{ paddingLeft: "5px", paddingRight: "5px" }} icon={faSquarePlus} color={"white"} size={"xl"} />
+      <FontAwesomeIcon
+        style={{ paddingLeft: "5px", paddingRight: "5px" }}
+        icon={faThumbsDown}
+        color={"white"}
+        size={"xl"}
+      />*/}
+      <FontAwesomeIcon
+        style={{ paddingLeft: "5px", paddingRight: "5px" }}
+        icon={faSquarePlus}
+        color={"white"}
+        size={"xl"}
+      /> 
     </div>
   );
 };
