@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ContentDescription from "./ContentDescription";
 import Playhead from "./Playhead";
+import NowPlayingContext from "../contexts/NowPlayingContext";
+import { play } from "../redux/content/contentSlice";
+
 const placeholderColors = [
   "#34495e",
   "#2c3e50",
@@ -18,43 +21,66 @@ const getRandomColor = () => {
 };
 
 const ContentPreview = ({ content }) => {
+  //TODO rename to ContentPlayer
   const [expanded, setExpanded] = useState(false);
   const [hover, setHover] = useState(false);
+  const [audio, setAudio] = useState(null);
+  const [status, setStatus] = useState("idle");
 
-  const backgroundStyle = {
-    backgroundImage: `url(${content.imageURL})`,
-    backgroundPosition: "center",
-    backgroundColor: `${content.imageURL ? null : getRandomColor()}`,
+  const { play, pause } = useContext(NowPlayingContext);
+
+  const handleToggle = () => {
+    if (!audio || audio.paused) play(audio);
+    else pause();
   };
 
-  const handleClick = () => {
-    setExpanded(!expanded);
+  const onMetadata = (e) => {
+    setStatus("fulfilled");
   };
 
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
+  useEffect(() => {
+    if (!audio) {
+      const audio = new Audio(content.audioURL);
+      setAudio(audio);
+      audio.addEventListener("loadedmetadata", onMetadata);
+      setStatus("pending");
+      console.log("SHOULD LOAD METADATA");
 
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
+      return () => {
+        //On dismount, remove event listeners.
+        audio.removeEventListener("loadedmetadata", onMetadata);
+      };
+    }
+  }, [expanded]);
 
   return (
     <div
       className="content-preview"
-      style={backgroundStyle}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        backgroundImage: `url(${content.imageURL})`,
+        backgroundPosition: "center",
+        backgroundColor: `${content.imageURL ? null : getRandomColor()}`,
+      }}
     >
       <div className="content-head" />
       <ContentDescription
         title={content.title}
         description={content.description}
         expanded={expanded}
-        onClick={handleClick}
+        onClick={() => setExpanded(!expanded)}
         hover={hover}
       />
-      {expanded && <Playhead content={content} />}
+      {expanded && (
+        <Playhead
+          content={content}
+          onToggle={handleToggle}
+          currentTime={audio?.currentTime}
+          duration={audio?.duration}
+          isPlaying={audio && !audio.paused}
+        />
+      )}
     </div>
   );
 };

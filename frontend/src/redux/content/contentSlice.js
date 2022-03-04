@@ -16,20 +16,7 @@ export const contentSlice = createSlice({
     nowPlaying: null,
   },
 
-  reducers: {
-    play: (state, action) => {
-      const content = action.payload;
-      const currentAudio = state.nowPlaying?.audio;
-      if (currentAudio) currentAudio.pause();
-
-      if (state.content.audio) state.nowPlaying = content.audio;
-      else state.nowPlaying = new Audio(state.content.audioURL);
-      //TODO this will never work
-
-      console.log(state.nowPlaying);
-      state.nowPlaying.play();
-    },
-  },
+  reducers: {},
 
   extraReducers(builder) {
     builder

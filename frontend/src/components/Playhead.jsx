@@ -1,21 +1,28 @@
-import { useDispatch } from "react-redux";
-import { play } from "../redux/content/contentSlice";
+import { useEffect, useState } from "react";
 import "./css/Playhead.css";
 import PlayButton from "./PlayButton";
 import Timeline from "./Timeline";
 
 const Playhead = (props) => {
-  const { content } = props;
-  const dispatch = useDispatch();
+  const { onToggle, currentTime, duration, isPlaying } = props;
+  const [seconds, setSeconds] = useState(currentTime);
 
-  const onPlayBtn = () => {
-    console.log("play");
-    dispatch(play(content));
-  };
+  useEffect(() => {
+    if (isPlaying) {
+      const intervalId = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [isPlaying]);
+
   return (
     <div {...props} className={"playhead " + (props.className || "")}>
-      <PlayButton onClick={onPlayBtn} />
-      <Timeline />
+      <PlayButton onClick={onToggle} isPlaying={isPlaying} />
+      <Timeline currentTime={seconds} duration={duration} />
     </div>
   );
 };
