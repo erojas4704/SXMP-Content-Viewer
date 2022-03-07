@@ -144,7 +144,7 @@ const podcasts = [
   },
 ];
 
-export const seedPodcasts = async (existing) => {
+export const seedPodcasts = async (existing = []) => {
 
     const hash = existing.reduce((acc, p) => {
         acc[p.title] = p;

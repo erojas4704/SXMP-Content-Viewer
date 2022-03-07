@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import ContentDescription from "./ContentDescription";
 import Playhead from "./Playhead";
 import NowPlayingContext from "../contexts/NowPlayingContext";
-import { play } from "../redux/content/contentSlice";
 
 const placeholderColors = [
   "#34495e",

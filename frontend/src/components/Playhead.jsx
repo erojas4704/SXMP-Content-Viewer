@@ -1,8 +1,4 @@
-import {
-  faSquarePlus,
-  faThumbsDown,
-  faThumbsUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import "./css/Playhead.css";
@@ -58,7 +54,7 @@ const Playhead = (props) => {
         icon={faSquarePlus}
         color={"white"}
         size={"xl"}
-      /> 
+      />
     </div>
   );
 };

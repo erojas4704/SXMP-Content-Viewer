@@ -7,8 +7,13 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { useEffect } from "react";
+import { seedPodcasts } from "./helpers/dbseeder";
 
 function App() {
+  useEffect(() => {
+    seedPodcasts();
+  },[])
   return (
     <div className="App">
       <div>
