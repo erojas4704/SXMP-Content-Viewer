@@ -45,7 +45,6 @@ public class JWTUtils {
 
     public String generateToken(LoginDetails loginDetails){
         Map<String, Object> claims = new HashMap<>();
-        System.out.println("LOOK WE'RE HERE HERE ARE OUR DETAILS  "+ loginDetails);
         return generateToken(claims, loginDetails.getEmail());
     }
 
@@ -60,8 +59,7 @@ public class JWTUtils {
 
     public Boolean validateToken(String token, User userDetails){
         //TODO figure out how this actually verifies the validity of the token.
-        final String email = getUsernameFromToken(token); //TODO try to make it make sense semantically. As we refer to emails as usernames.
-        System.out.println("GOT USERNAME FROM TOKEN " + userDetails.getEmail());
-        return (email.equals(userDetails.getEmail()) && !isTokenExpired(token));
+        final String username = getUsernameFromToken(token); //TODO try to make it make sense semantically. As we refer to emails as usernames.
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

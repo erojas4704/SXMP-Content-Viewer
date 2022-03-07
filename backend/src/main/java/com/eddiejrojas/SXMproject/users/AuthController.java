@@ -38,7 +38,7 @@ public class AuthController {
         //TODO appropriate error handling with detailed feedback for redundant users
         //TODO delegate this to a service
         String encodedPassword = passwordEncoder.encode(registerUser.getPassword());
-        User newUser = new User(registerUser.getUsername(), registerUser.getEmail(), encodedPassword);
+        User newUser = new User(registerUser.getUsername(), registerUser.getUsername(), encodedPassword);
 
         UserProfile profile = UserProfile.from(repository.save(newUser));
         EntityModel<UserProfile> entityModel = assembler.toModel(profile);

@@ -1,15 +1,19 @@
 package com.eddiejrojas.SXMproject.content;
 
+import com.eddiejrojas.SXMproject.reactions.Reaction;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,8 @@ import java.util.stream.Collectors;
 class ContentController {
     private final ContentRepository repository;
     private final ContentModelAssembler assembler;
+    @Autowired
+    ContentService contentService;
 
     ContentController(ContentRepository repository, ContentModelAssembler assembler){
         this.repository = repository;
@@ -65,6 +71,13 @@ class ContentController {
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
+    }
+
+    @PutMapping("/{id}/like")
+    String likeContent(Authentication authentication, Principal principal, @PathVariable Long id){
+        String username = authentication.getName();
+        Reaction react = contentService.userReactsToContent(username, id, 1);
+        return "atta boy ? " + react;
     }
 
     @DeleteMapping("/{id}")

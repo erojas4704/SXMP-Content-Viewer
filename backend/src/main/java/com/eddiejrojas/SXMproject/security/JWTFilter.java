@@ -41,8 +41,8 @@ public class JWTFilter extends OncePerRequestFilter {
         the user with an authenticated token and allow the user to access protected routes.
          */
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User userDetails = userRepository.findByEmail(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found")); //TODO rename to go by email.
+            User userDetails = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 
             if (jwtUtils.validateToken(token, userDetails)) {

@@ -1,39 +1,44 @@
 package com.eddiejrojas.SXMproject.users;
 
+import com.eddiejrojas.SXMproject.reactions.Reaction;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "handle")})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 48, nullable = false)
+    @Column(nullable = false)
     private String username;
-    @Column(length = 48, nullable = false)
-    private String email;
     @Column(length = 128, nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String handle;
     private Role role;
 
     @Column
     private String avatarURL;
 
+    @OneToMany(mappedBy="user")
+    private Set<Reaction> reactions;
+
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String handle, String password) {
         this.username = username;
-        this.email = email;
+        this.handle = handle;
         this.password = password;
     }
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
@@ -69,12 +74,12 @@ public class User implements UserDetails {
         return null;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getHandle() {
+        return this.handle;
     }
 
-    public void setEmail(String value) {
-        this.email = value;
+    public void setHandle(String value) {
+        this.handle = value;
     }
 
     public String getAvatarURL() {
@@ -83,6 +88,14 @@ public class User implements UserDetails {
 
     public void setAvatarURL(String value) {
         this.avatarURL = value;
+    }
+
+    public Set<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(Set<Reaction> reactions) {
+        this.reactions = reactions;
     }
 
     @Override
@@ -106,6 +119,6 @@ public class User implements UserDetails {
     }
 
     public String toString() {
-        return String.format("[%s: E-mail: %s]", this.getUsername(), this.getEmail());
+        return String.format("[%s: E-mail: %s]", this.getUsername(), this.getHandle());
     }
 }

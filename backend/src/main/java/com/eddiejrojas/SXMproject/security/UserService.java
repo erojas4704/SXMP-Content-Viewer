@@ -16,13 +16,13 @@ public class UserService implements UserDetailsService {
 
     /**
      * Loads an user by their e-mail, which are used as usernames in our application.
-     * @param email For our system, our usernames are e-mails.
+     * @param username For our system, our usernames are e-mails.
      * @return User The user that was found.
      * @throws UsernameNotFoundException if no user was found with that e=mail.
      */
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         return user;
     }
