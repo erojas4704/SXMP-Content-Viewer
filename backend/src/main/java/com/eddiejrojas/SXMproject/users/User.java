@@ -25,7 +25,11 @@ public class User implements UserDetails {
     @Column
     private String avatarURL;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<Reaction> reactions;
 
     public User() {

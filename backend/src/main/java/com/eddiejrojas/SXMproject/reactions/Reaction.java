@@ -9,14 +9,12 @@ public class Reaction {
     @EmbeddedId
     ContentReactionKey id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("contentId")
-    @JoinColumn(name = "content_id")
     Content content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
-    @JoinColumn(name = "user_id")
     User user;
 
     //TODO constrain this so it's no more than 1 and no less than -1.

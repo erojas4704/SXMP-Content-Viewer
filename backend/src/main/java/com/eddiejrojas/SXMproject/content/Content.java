@@ -22,10 +22,15 @@ public class Content {
     private String audioURL;
     private String imageURL;
 
-    @OneToMany(mappedBy="content")
+    @OneToMany(
+            mappedBy = "content",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<Reaction> reactions;
 
     Content() {}
+
 
     Content(String title, String name, String description, String source, String audioURL, String imageURL) {
         this.title = title;
