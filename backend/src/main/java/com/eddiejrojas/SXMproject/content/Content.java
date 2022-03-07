@@ -24,8 +24,7 @@ public class Content {
 
     @OneToMany(
             mappedBy = "content",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     private Set<Reaction> reactions;
 

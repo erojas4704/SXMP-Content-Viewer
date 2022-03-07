@@ -20,6 +20,7 @@ public class ContentService {
     Reaction userReactsToContent(String username, Long contentId, int rating) throws ContentNotFoundException, UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow( () -> new UsernameNotFoundException("User not found"));
         Content content = contentRepository.findById(contentId).orElseThrow( () -> new ContentNotFoundException(contentId));
+
         Reaction reaction = new Reaction(user, content, rating);
         System.out.println(content.getReactions());
         //reactionRepository.save(reaction);

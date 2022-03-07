@@ -4,17 +4,21 @@ import com.eddiejrojas.SXMproject.content.Content;
 import com.eddiejrojas.SXMproject.users.User;
 import jakarta.persistence.*;
 
+
 @Entity
 public class Reaction {
-    @EmbeddedId
-    ContentReactionKey id;
+    //@EmbeddedId
+    //ContentReactionKey id;
+    @Id
+    @GeneratedValue
+    Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("contentId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="content_id")
     Content content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="user_id")
     User user;
 
     //TODO constrain this so it's no more than 1 and no less than -1.
@@ -28,11 +32,11 @@ public class Reaction {
         this.setRating(rating);
     }
 
-    public void setId(ContentReactionKey id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public ContentReactionKey getId() {
+    public Long getId() {
         return id;
     }
 

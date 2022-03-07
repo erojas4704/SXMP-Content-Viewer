@@ -74,10 +74,17 @@ class ContentController {
     }
 
     @PutMapping("/{id}/like")
-    String likeContent(Authentication authentication, Principal principal, @PathVariable Long id){
+    ResponseEntity<?> likeContent(Authentication authentication, Principal principal, @PathVariable Long id){
         String username = authentication.getName();
         Reaction react = contentService.userReactsToContent(username, id, 1);
-        return "atta boy ? " + react;
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/dislike")
+    ResponseEntity<?> dislikeContent(Authentication authentication, Principal principal, @PathVariable Long id){
+        String username = authentication.getName();
+        Reaction react = contentService.userReactsToContent(username, id, -1);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

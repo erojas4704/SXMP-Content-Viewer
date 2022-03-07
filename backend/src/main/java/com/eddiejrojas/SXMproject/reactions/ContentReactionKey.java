@@ -9,30 +9,30 @@ import java.util.Objects;
 @Embeddable
 public class ContentReactionKey implements Serializable {
     @Column(name = "user_id")
-    Long userid;
+    Long userId;
     @Column(name = "content_id")
-    Long contentid;
+    Long contentId;
 
     public ContentReactionKey () {};
     public ContentReactionKey (Long userId, Long contentId) {
-        this.contentid = contentId;
-        this.userid = userId;
+        this.contentId = contentId;
+        this.userId = userId;
     }
 
-    public Long getContentid() {
-        return contentid;
+    public Long getContentId() {
+        return contentId;
     }
 
-    public void setContentid(Long value) {
-        this.contentid = value;
+    public void setContentId(Long value) {
+        this.contentId = value;
     }
 
-    public Long getUserid() {
-        return userid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserid(Long value) {
-        this.userid = value;
+    public void setUserId(Long value) {
+        this.userId = value;
     }
 
     @Override
@@ -40,11 +40,11 @@ public class ContentReactionKey implements Serializable {
         if (this == o) return true;
         if (!(o instanceof ContentReactionKey)) return false;
         ContentReactionKey that = (ContentReactionKey) o;
-        return Objects.equals(getUserid(), that.getUserid()) && Objects.equals(getContentid(), that.getContentid());
+        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getContentId(), that.getContentId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserid(), getContentid());
+        return Objects.hash(getUserId(), getContentId());
     }
 }

@@ -27,8 +27,7 @@ public class User implements UserDetails {
 
     @OneToMany(
             mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     private Set<Reaction> reactions;
 
