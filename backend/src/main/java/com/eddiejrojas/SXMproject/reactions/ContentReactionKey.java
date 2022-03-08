@@ -1,50 +1,49 @@
 package com.eddiejrojas.SXMproject.reactions;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 public class ContentReactionKey implements Serializable {
-    @Column(name = "user_id")
-    Long userId;
-    @Column(name = "content_id")
-    Long contentId;
+    Long user;
+    Long content;
 
-    public ContentReactionKey () {};
-    public ContentReactionKey (Long userId, Long contentId) {
-        this.contentId = contentId;
-        this.userId = userId;
+    public ContentReactionKey() {
+    };
+
+    public ContentReactionKey(Long userId, Long contentId) {
+        this.content = contentId;
+        this.user = userId;
     }
 
-    public Long getContentId() {
-        return contentId;
+    public Long getContent() {
+        return content;
     }
 
-    public void setContentId(Long value) {
-        this.contentId = value;
+    public void setContent(Long content) {
+        this.content = content;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUser() {
+        return user;
     }
 
-    public void setUserId(Long value) {
-        this.userId = value;
+    public void setUser(Long user) {
+        this.user = user;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ContentReactionKey)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof ContentReactionKey))
+            return false;
         ContentReactionKey that = (ContentReactionKey) o;
-        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getContentId(), that.getContentId());
+        return Objects.equals(getUser(), that.getUser()) && Objects.equals(getContent(), that.getContent());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getContentId());
+        return Objects.hash(getUser(), getContent());
     }
 }

@@ -1,7 +1,7 @@
 package com.eddiejrojas.SXMproject.users.models;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
-import com.eddiejrojas.SXMproject.users.models.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,8 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "handle")})
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "handle") })
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,15 +24,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String handle;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.USER;
 
     @Column
     private String avatarURL;
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Reaction> reactions;
 
     public User() {
@@ -76,7 +74,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //TODO extend the model so that we can have appropriate permissions for admins
+        // TODO extend the model so that we can have appropriate permissions for admins
         return null;
     }
 

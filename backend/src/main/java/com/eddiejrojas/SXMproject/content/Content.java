@@ -1,15 +1,16 @@
 package com.eddiejrojas.SXMproject.content;
 
-import com.eddiejrojas.SXMproject.reactions.Reaction;
-import jakarta.persistence.*;
-
 import java.util.Set;
 
+import com.eddiejrojas.SXMproject.reactions.Reaction;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "content",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "id")
-        })
+@Table(name = "content", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id")
+})
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +23,11 @@ public class Content {
     private String audioURL;
     private String imageURL;
 
-    @OneToMany(
-            mappedBy = "content",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "content")
     private Set<Reaction> reactions;
 
-    Content() {}
-
+    Content() {
+    }
 
     Content(String title, String name, String description, String source, String audioURL, String imageURL) {
         this.title = title;
@@ -95,15 +93,6 @@ public class Content {
     public void setName(String value) {
         this.name = value;
     }
-
-    public Set<Reaction> getReactions(){
-        return this.reactions;
-    }
-
-    public void setReactions(Set<Reaction> reactions){
-        this.reactions = reactions;
-    }
-
 
     @Override
     public String toString() {

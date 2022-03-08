@@ -26,7 +26,8 @@ public class JWTFilter extends OncePerRequestFilter {
     private JWTUtils jwtUtils;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+            FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -36,18 +37,19 @@ public class JWTFilter extends OncePerRequestFilter {
             username = jwtUtils.getUsernameFromToken(token);
         }
 
-
-        /*If we have a valid username from our token and we have no authentication, we will provide
-        the user with an authenticated token and allow the user to access protected routes.
+        /*
+         * If we have a valid username from our token and we have no authentication, we
+         * will provide
+         * the user with an authenticated token and allow the user to access protected
+         * routes.
          */
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User userDetails = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-
             if (jwtUtils.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
 
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
