@@ -2,29 +2,24 @@ package com.eddiejrojas.SXMproject.reactions;
 
 import java.io.Serializable;
 
-import com.eddiejrojas.SXMproject.users.models.User;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "reactions")
-public class Reaction implements Serializable{
-    // @EmbeddedId
-    // ContentReactionKey id;
-    // @Id
-    // @GeneratedValue
-    // Long id;
+@IdClass(ContentReactionKey.class)
+public class Reaction implements Serializable {
 
-    @EmbeddedId
+    @Id
     Long contentId;
 
-    @EmbeddedId
+    @Id
     Long userId;
-
-    // TODO constrain this so it's no more than 1 and no less than -1.
 
     @Column
     int rating;
+
+    @Column
+    Boolean isFavorite = false;
 
     public Reaction() {
     }
@@ -53,6 +48,14 @@ public class Reaction implements Serializable{
 
     public int getRating() {
         return this.rating;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+    
+    public Boolean getIsFavorite() {
+        return isFavorite;
     }
 
     public void setRating(int rating) // throws RuntimeException{

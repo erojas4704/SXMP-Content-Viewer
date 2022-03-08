@@ -1,40 +1,38 @@
 package com.eddiejrojas.SXMproject.reactions;
 
-
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.eddiejrojas.SXMproject.users.models.User;
-
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.IdClass;
 
 @Embeddable
 public class ContentReactionKey implements Serializable {
-    Long user;
-    Long content;
+    Long userId;
+    Long contentId;
 
     public ContentReactionKey() {
     };
 
     public ContentReactionKey(Long userId, Long contentId) {
-        this.content = contentId;
-        this.user = userId;
+        this.contentId = contentId;
+        this.userId = userId;
     }
 
-    public Long getContent() {
-        return content;
+    public Long getContentId() {
+        return contentId;
     }
 
-    public void setContent(Long content) {
-        this.content = content;
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
     }
 
-    public Long getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(Long user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -44,11 +42,11 @@ public class ContentReactionKey implements Serializable {
         if (!(o instanceof ContentReactionKey))
             return false;
         ContentReactionKey that = (ContentReactionKey) o;
-        return Objects.equals(getUser(), that.getUser()) && Objects.equals(getContent(), that.getContent());
+        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getContentId(), that.getContentId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getContent());
+        return Objects.hash(getUserId(), getContentId());
     }
 }

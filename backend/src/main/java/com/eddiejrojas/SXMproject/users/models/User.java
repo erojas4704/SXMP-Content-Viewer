@@ -1,8 +1,6 @@
 package com.eddiejrojas.SXMproject.users.models;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,8 +27,8 @@ public class User implements UserDetails {
     @Column
     private String avatarURL;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Reaction> reactions;
+    // @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    // private Set<Reaction> reactions;
 
     public User() {
     }
@@ -92,14 +90,6 @@ public class User implements UserDetails {
 
     public void setAvatarURL(String value) {
         this.avatarURL = value;
-    }
-
-    public Set<Reaction> getReactions() {
-        return reactions;
-    }
-
-    public void setReactions(Set<Reaction> reactions) {
-        this.reactions = reactions;
     }
 
     @Override

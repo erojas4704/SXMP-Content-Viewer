@@ -23,9 +23,6 @@ public class Content {
     private String audioURL;
     private String imageURL;
 
-    @OneToMany(mappedBy = "content")
-    private Set<Reaction> reactions;
-
     Content() {
     }
 
@@ -92,14 +89,6 @@ public class Content {
 
     public void setName(String value) {
         this.name = value;
-    }
-
-    public Set<Reaction> getReactions() {
-        return reactions;
-    }
-
-    public void setReactions(Set<Reaction> reactions) {
-        this.reactions = reactions;
     }
 
     @Override

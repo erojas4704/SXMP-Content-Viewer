@@ -1,6 +1,8 @@
 package com.eddiejrojas.SXMproject.content;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
+import com.eddiejrojas.SXMproject.users.services.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -31,7 +33,9 @@ class ContentController {
     }
 
     @GetMapping("/{id}")
-    Content one(@PathVariable Long id) {
+    Content one(Authentication authentication, @PathVariable Long id) {
+        String username = authentication.getName();
+        //User user = UserRepository.findByUsername(username);
         Content content = repository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
 
@@ -72,14 +76,37 @@ class ContentController {
     ResponseEntity<?> likeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
         String username = authentication.getName();
         Reaction react = contentService.userReactsToContent(username, id, 1);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(react);
     }
 
     @PutMapping("/{id}/dislike")
     ResponseEntity<?> dislikeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
         String username = authentication.getName();
         Reaction react = contentService.userReactsToContent(username, id, -1);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(react);
+    }
+
+    @PutMapping("/{id}/unlike")
+    ResponseEntity<?> unlikeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
+        String username = authentication.getName();
+        Reaction react = contentService.userReactsToContent(username, id, 0);
+        return ResponseEntity.ok().body(react);
+    }
+
+    @PutMapping("/{id}/favorite")
+    ResponseEntity<?> favoriteContent(Authentication authentication, Principal principal, @PathVariable Long id) {
+        String username = authentication.getName();
+        Reaction react = contentService.userFavoritesContent(username, id, true);
+        return ResponseEntity.ok().body(react);
+    }
+
+    // TODO lots of duplicate code here. You can probably use some param trickery to
+    // condense these routes.
+    @PutMapping("/{id}/unfavorite")
+    ResponseEntity<?> unfavoriteContent(Authentication authentication, Principal principal, @PathVariable Long id) {
+        String username = authentication.getName();
+        Reaction react = contentService.userFavoritesContent(username, id, false);
+        return ResponseEntity.ok().body(react);
     }
 
     @DeleteMapping("/{id}")
