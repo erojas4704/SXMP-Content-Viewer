@@ -4,6 +4,11 @@ package com.eddiejrojas.SXMproject.reactions;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.eddiejrojas.SXMproject.users.models.User;
+
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class ContentReactionKey implements Serializable {
     Long user;
     Long content;

@@ -1,30 +1,25 @@
 package com.eddiejrojas.SXMproject.reactions;
 
-import com.eddiejrojas.SXMproject.content.Content;
+import java.io.Serializable;
+
 import com.eddiejrojas.SXMproject.users.models.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "reactions")
-@IdClass(ContentReactionKey.class)
-public class Reaction {
+public class Reaction implements Serializable{
     // @EmbeddedId
     // ContentReactionKey id;
     // @Id
     // @GeneratedValue
     // Long id;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "content_id", referencedColumnName = "id")
-    Content content;
+    @EmbeddedId
+    Long contentId;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    User user;
+    @EmbeddedId
+    Long userId;
 
     // TODO constrain this so it's no more than 1 and no less than -1.
 
@@ -34,26 +29,26 @@ public class Reaction {
     public Reaction() {
     }
 
-    public Reaction(User user, Content content, int rating) {
-        this.user = user;
-        this.content = content;
+    public Reaction(Long user, Long content, int rating) {
+        this.userId = user;
+        this.contentId = content;
         this.setRating(rating);
     }
 
-    public User getUser() {
-        return this.user;
+    public Long getUser() {
+        return this.userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Long user) {
+        this.userId = user;
     }
 
-    public Content getContent() {
-        return this.content;
+    public Long getContent() {
+        return this.contentId;
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public void setContent(Long content) {
+        this.contentId = content;
     }
 
     public int getRating() {
@@ -68,6 +63,6 @@ public class Reaction {
     }
 
     public String toString() {
-        return String.format("{Reaction from user: %s score: %d}", this.user, this.rating);
+        return String.format("{Reaction from user: %s score: %d}", this.userId, this.rating);
     }
 }

@@ -20,11 +20,13 @@ public class ContentService {
         Content content = contentRepository.findById(contentId).orElseThrow( () -> new ContentNotFoundException(contentId));
 
         Reaction reaction = new Reaction();
-        reaction.setContent(content);
-        reaction.setUser(user);
+        reaction.setContent(content.getId());
+        reaction.setUser(user.getId());
 
         user.getReactions().add(reaction);
+        content.getReactions().add(reaction);
         userRepository.save(user);
+        contentRepository.save(content);
 
         //TODO reactionRepository might be unnecessary if we can just use the user or content repos to save our association.
         return reaction;

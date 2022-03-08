@@ -94,6 +94,14 @@ public class Content {
         this.name = value;
     }
 
+    public Set<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(Set<Reaction> reactions) {
+        this.reactions = reactions;
+    }
+
     @Override
     public String toString() {
         return String.format("%s: %s", this.title, this.description);
