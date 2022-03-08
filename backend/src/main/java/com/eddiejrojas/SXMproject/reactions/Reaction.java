@@ -1,7 +1,8 @@
 package com.eddiejrojas.SXMproject.reactions;
 
 import com.eddiejrojas.SXMproject.content.Content;
-import com.eddiejrojas.SXMproject.users.User;
+import com.eddiejrojas.SXMproject.users.models.User;
+
 import jakarta.persistence.*;
 
 

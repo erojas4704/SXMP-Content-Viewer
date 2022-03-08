@@ -1,21 +1,16 @@
 package com.eddiejrojas.SXMproject.content;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/content")
@@ -25,7 +20,7 @@ class ContentController {
     @Autowired
     ContentService contentService;
 
-    ContentController(ContentRepository repository, ContentModelAssembler assembler){
+    ContentController(ContentRepository repository, ContentModelAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
     }
@@ -36,7 +31,7 @@ class ContentController {
     }
 
     @GetMapping("/{id}")
-    Content one(@PathVariable Long id){
+    Content one(@PathVariable Long id) {
         Content content = repository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
 
@@ -44,15 +39,15 @@ class ContentController {
     }
 
     @PostMapping("")
-    ResponseEntity<?> newContent(@RequestBody Content newContent){
+    ResponseEntity<?> newContent(@RequestBody Content newContent) {
         EntityModel<Content> entityModel = assembler.toModel(repository.save(newContent));
         return ResponseEntity
-                .created(URI.create("")) //TODO reconsider our links
+                .created(URI.create("")) // TODO reconsider our links
                 .body(entityModel);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<?> replaceContent(@RequestBody Content newContent, @PathVariable Long id){
+    ResponseEntity<?> replaceContent(@RequestBody Content newContent, @PathVariable Long id) {
         Content updatedContent = repository.findById(id)
                 .map(content -> {
                     content.setTitle(newContent.getTitle());
@@ -74,21 +69,21 @@ class ContentController {
     }
 
     @PutMapping("/{id}/like")
-    ResponseEntity<?> likeContent(Authentication authentication, Principal principal, @PathVariable Long id){
+    ResponseEntity<?> likeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
         String username = authentication.getName();
         Reaction react = contentService.userReactsToContent(username, id, 1);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}/dislike")
-    ResponseEntity<?> dislikeContent(Authentication authentication, Principal principal, @PathVariable Long id){
+    ResponseEntity<?> dislikeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
         String username = authentication.getName();
         Reaction react = contentService.userReactsToContent(username, id, -1);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<?> deleteContent(@PathVariable Long id){
+    ResponseEntity<?> deleteContent(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,6 +1,5 @@
 package com.eddiejrojas.SXMproject.security;
 
-import com.eddiejrojas.SXMproject.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

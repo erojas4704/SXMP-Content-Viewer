@@ -1,8 +1,12 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.auth;
 
 import com.eddiejrojas.SXMproject.security.JWTUtils;
+import com.eddiejrojas.SXMproject.users.models.AuthorizedUser;
+import com.eddiejrojas.SXMproject.users.models.LoginDetails;
+import com.eddiejrojas.SXMproject.users.models.User;
+import com.eddiejrojas.SXMproject.users.services.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,11 +29,9 @@ public class AuthController {
     private JWTUtils jwtUtils;
 
     private final UserRepository repository;
-    private final UserModelAssembler assembler;
 
-    AuthController(UserRepository repository, UserModelAssembler assembler) {
+    AuthController(UserRepository repository) {
         this.repository = repository;
-        this.assembler = assembler;
     }
 
     @PostMapping("/register")

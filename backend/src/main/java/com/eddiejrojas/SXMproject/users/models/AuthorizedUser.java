@@ -1,4 +1,4 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.models;
 
 import java.util.Date;
 
@@ -7,10 +7,10 @@ public class AuthorizedUser {
     private String username;
     private Date expires;
 
-    AuthorizedUser() {
+    public AuthorizedUser() {
     }
 
-    AuthorizedUser(String username, String token, Date expires) {
+    public AuthorizedUser(String username, String token, Date expires) {
         this.username = username;
         this.token = token;
         this.expires = expires;

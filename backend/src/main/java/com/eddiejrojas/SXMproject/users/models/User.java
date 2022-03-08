@@ -1,6 +1,8 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.models;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
+import com.eddiejrojas.SXMproject.users.models.Role;
+
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ public class User implements UserDetails {
     private String password;
     @Column(nullable = false)
     private String handle;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column

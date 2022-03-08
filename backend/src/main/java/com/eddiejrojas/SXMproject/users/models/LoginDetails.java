@@ -1,10 +1,10 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.models;
 
 public class LoginDetails {
     private String username;
     private String password;
 
-    LoginDetails(String email, String password) {
+    public LoginDetails(String email, String password) {
         this.username = email;
         this.password = password;
     }

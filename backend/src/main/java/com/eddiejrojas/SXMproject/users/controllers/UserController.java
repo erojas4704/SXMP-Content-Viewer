@@ -1,4 +1,4 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,15 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import com.eddiejrojas.SXMproject.users.exceptions.UserNotFoundException;
+import com.eddiejrojas.SXMproject.users.models.UserProfile;
+import com.eddiejrojas.SXMproject.users.services.UserRepository;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserRepository repository;
-    private final UserModelAssembler assembler;
 
-    UserController(UserRepository repository, UserModelAssembler assembler) {
+    UserController(UserRepository repository) {
         this.repository = repository;
-        this.assembler = assembler;
     }
 
     @GetMapping("/{id}")

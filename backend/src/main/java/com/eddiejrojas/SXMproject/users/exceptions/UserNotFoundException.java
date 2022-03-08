@@ -1,7 +1,7 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.exceptions;
 
 public class UserNotFoundException extends RuntimeException{
-    UserNotFoundException(Long id){
+    public UserNotFoundException(Long id){
         super(String.format("User %d not found", id));
     }
 }

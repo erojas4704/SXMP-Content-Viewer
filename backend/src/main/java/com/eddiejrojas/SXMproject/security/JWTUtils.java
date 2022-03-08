@@ -1,7 +1,8 @@
 package com.eddiejrojas.SXMproject.security;
 
-import com.eddiejrojas.SXMproject.users.LoginDetails;
-import com.eddiejrojas.SXMproject.users.User;
+import com.eddiejrojas.SXMproject.users.models.LoginDetails;
+import com.eddiejrojas.SXMproject.users.models.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

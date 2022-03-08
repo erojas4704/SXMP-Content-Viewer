@@ -1,4 +1,4 @@
-package com.eddiejrojas.SXMproject.users;
+package com.eddiejrojas.SXMproject.users.models;
 
 import java.util.ArrayList;
 import java.util.List;
