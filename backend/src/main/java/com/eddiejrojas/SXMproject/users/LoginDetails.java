@@ -1,20 +1,20 @@
 package com.eddiejrojas.SXMproject.users;
 
 public class LoginDetails {
-    private String email;
+    private String username;
     private String password;
 
     LoginDetails(String email, String password) {
-        this.email = email;
+        this.username = email;
         this.password = password;
     }
 
     public void setEmail(String value) {
-        this.email = value;
+        this.username = value;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getUsername() {
+        return this.username;
     }
 
     public String getPassword() {
@@ -26,6 +26,6 @@ public class LoginDetails {
     }
 
     public String toString(){
-        return String.format("Email: %s Pass: %s", this.getEmail(), this.getPassword());
+        return String.format("Username: %s Pass: %s", this.getUsername(), this.getPassword());
     }
 }

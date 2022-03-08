@@ -1,5 +1,5 @@
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import ContentPage from "./components/ContentPage";
 import Navbar from "./components/Navbar";
 import AudioPlayer from "./components/AudioPlayer";
@@ -7,13 +7,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { useEffect } from "react";
-import { seedPodcasts } from "./helpers/dbseeder";
+import Api from "./Api";
+import { store } from "./redux/store";
 
 function App() {
-  useEffect(() => {
-    seedPodcasts();
-  },[])
+  Api.setStore(store);
+
   return (
     <div className="App">
       <div>

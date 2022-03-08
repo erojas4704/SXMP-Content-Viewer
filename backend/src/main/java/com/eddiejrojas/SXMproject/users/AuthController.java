@@ -32,35 +32,38 @@ public class AuthController {
         this.assembler = assembler;
     }
 
-
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody User registerUser) {
-        //TODO appropriate error handling with detailed feedback for redundant users
-        //TODO delegate this to a service
-        String encodedPassword = passwordEncoder.encode(registerUser.getPassword());
-        User newUser = new User(registerUser.getUsername(), registerUser.getUsername(), encodedPassword);
-
-        UserProfile profile = UserProfile.from(repository.save(newUser));
-        EntityModel<UserProfile> entityModel = assembler.toModel(profile);
-
-
+        // TODO appropriate error handling with detailed feedback for redundant users
+        // TODO delegate this to a service
+        registerUser.setPassword(passwordEncoder.encode(registerUser.getPassword()));
+        User newUser = repository.save(registerUser);
+        LoginDetails loginDetails = new LoginDetails(newUser.getUsername(), registerUser.getPassword());
+        String token = jwtUtils.generateToken(loginDetails);
+        AuthorizedUser authorizedUser = new AuthorizedUser(newUser.getUsername(), token,
+                jwtUtils.getExpirationDateFromToken(token));
 
         return ResponseEntity.created(URI.create(""))
-                .body(entityModel);
+                .body(authorizedUser);
     }
 
     @PostMapping("/login")
-    String login(@RequestBody LoginDetails loginDetails) throws Exception {
+    ResponseEntity<?> login(@RequestBody LoginDetails loginDetails) throws Exception {
         System.out.println(loginDetails);
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDetails.getEmail(), loginDetails.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword()));
 
-        }catch(Exception err) {
+        } catch (Exception err) {
             throw new Exception("Invalid username or password");
         }
 
-        return jwtUtils.generateToken(loginDetails);
+        String token = jwtUtils.generateToken(loginDetails);
+        AuthorizedUser user = new AuthorizedUser();
+        user.setToken(token);
+        user.setUsername(loginDetails.getUsername());
+        user.setExpires(jwtUtils.getExpirationDateFromToken(token));
+
+        return ResponseEntity.ok(user);
     }
 }

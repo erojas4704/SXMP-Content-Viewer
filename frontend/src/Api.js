@@ -1,7 +1,10 @@
-const axios = require("axios");
+import axios from "axios";
 
 export const client = axios.create({
   baseURL: "/api",
+  headers: {
+    "Content-Type": "application/json",
+  }
 });
 
 export default class Api {
@@ -43,14 +46,18 @@ export default class Api {
     return response.data;
   }
 
-  /**
-   *
-   * @param {string} email
-   * @param {string} password
-   */
-  static async login(email, password) {
+  static async register(username, password, handle) {
+    const response = await client.post("/auth/register", {
+      username,
+      password,
+      handle,
+    });
+    return response.data;
+  }
+
+  static async login(username, password) {
     try {
-      const response = await client.post("/auth/login", { email, password });
+      const response = await client.post("/auth/login", { username, password });
       //TODO change reponse to be an object with token and user data.
       client.defaults.headers.authorization = `Bearer ${response.data.token}`;
       return response.data;
@@ -60,5 +67,12 @@ export default class Api {
       client.defaults.headers.authorization = null;
       throw err;
     }
+  }
+
+  static setStore(store) {
+    store.subscribe(() => {
+      const token = store.getState().auth.token;
+      client.defaults.headers.authorization = token ? `Bearer ${token}` : null;
+    });
   }
 }

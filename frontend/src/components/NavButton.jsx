@@ -1,7 +1,7 @@
 import "./css/NavButton.css";
 
-const NavButton = ({children}) => {
-  return <button className="nav-button">{children}</button>;
+const NavButton = (props) => {
+  return <button {...props} className="nav-button">{props.children}</button>;
 };
 
 export default NavButton;

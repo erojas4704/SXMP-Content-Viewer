@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/auth/authSlice";
 import "./css/FormPage.css";
 
+//TODO address lots of repetition in this file and RegisterPage.jsx
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { status, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, error, status }   = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,20 +49,25 @@ const LoginPage = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="on"
               />
             </Form.Group>
-            <div style={{ marginTop: "2rem" }}>
-              <Button
-                style={{ marginRight: "8px" }}
-                variant="primary"
-                type="submit"
-              >
-                Login
-              </Button>
-              <Link to="/register">
-                <Button variant="success">Create Account</Button>
-              </Link>
-            </div>
+            {status !== "pending" ? (
+              <div style={{ marginTop: "2rem" }}>
+                <Button
+                  style={{ marginRight: "8px" }}
+                  variant="primary"
+                  type="submit"
+                >
+                  Login
+                </Button>
+                <Link to="/register">
+                  <Button variant="success">Create Account</Button>
+                </Link>
+              </div>
+            ) : (
+              <Spinner style={{marginTop: "1rem"}} animation="border"/>
+            )}
           </Form>
         </Col>
       </Row>
