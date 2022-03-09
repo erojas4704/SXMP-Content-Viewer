@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContentService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ContentRepository contentRepository;
     @Autowired
     private ReactionRepository reactionRepository;
@@ -49,6 +47,8 @@ public class ContentService {
                 .map(c -> {
                     Reaction reaction = reactions.get(c.getId());
                     UserContent userContent = new UserContent(c, reaction);
+                    userContent.setLikes(contentRepository.getLikesForContent(c.getId()));
+                    userContent.setDislikes(contentRepository.getDislikesForContent(c.getId()));
                     return userContent;
                 })
                 .collect(Collectors.toList());

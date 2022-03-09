@@ -6,12 +6,13 @@ import org.springframework.beans.BeanUtils;
 
 /**
  * Subclass of content. This class contains an user's personal preferences
- * regarding
- * a specific piece of content.
+ * regarding a specific piece of content as well as other useful metadata that doesn't need to be persisted.
  */
 public class UserContent extends Content {
     private int rating;
     private Boolean isFavorite = false;
+    private int likes;
+    private int dislikes;
 
     public UserContent() {
     }
@@ -42,5 +43,21 @@ public class UserContent extends Content {
 
     public Boolean getIsFavorite() {
         return isFavorite;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+    
+    public int getDislikes() {
+        return dislikes;
     }
 }

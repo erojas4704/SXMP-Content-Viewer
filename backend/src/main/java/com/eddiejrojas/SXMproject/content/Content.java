@@ -1,4 +1,10 @@
 package com.eddiejrojas.SXMproject.content;
+import java.util.List;
+
+import com.eddiejrojas.SXMproject.reactions.Reaction;
+
+import org.springframework.data.jpa.repository.Query;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -84,6 +90,7 @@ public class Content {
     public void setName(String value) {
         this.name = value;
     }
+
 
     @Override
     public String toString() {
