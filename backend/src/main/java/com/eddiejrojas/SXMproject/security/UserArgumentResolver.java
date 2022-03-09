@@ -23,7 +23,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String token = webRequest.getHeader("Authorization");
-        if (token == null)
+        if (token == null || !token.startsWith("Bearer "))
             return null;
 
         User user = userRepository.findByUsername(jwtUtils.getUsernameFromToken(token.substring(7)))
