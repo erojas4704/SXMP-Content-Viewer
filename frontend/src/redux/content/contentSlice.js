@@ -45,6 +45,9 @@ export const contentSlice = createSlice({
         const { contentId, rating, isFavorite } = action.meta.arg;
         const content = state.content[contentId];
         content.rating = rating || content.rating;
+        if (rating > 0) content.likes++;
+        else if (rating < 0) content.dislikes++;
+        
         content.isFavorite =
           isFavorite !== null ? isFavorite : content.isFavorite;
         content.status = "pending";
@@ -55,9 +58,8 @@ export const contentSlice = createSlice({
         content.status = "error";
       })
       .addCase(reactToContent.fulfilled, (state, action) => {
-        const { contentId, rating, isFavorite } = action.meta.arg;
-        const content = state.content[contentId];
-        content = action.payload;
+        const { contentId } = action.meta.arg;
+        state.content[contentId] = action.payload;
       });
   },
 });
