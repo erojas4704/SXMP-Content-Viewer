@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.IdClass;
 
 @Embeddable
 public class ContentReactionKey implements Serializable {

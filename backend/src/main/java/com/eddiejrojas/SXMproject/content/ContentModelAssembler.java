@@ -12,7 +12,7 @@ class ContentModelAssembler implements RepresentationModelAssembler<Content, Ent
     @Override
     public EntityModel<Content> toModel(Content content){
         return EntityModel.of(content,
-                linkTo(methodOn(ContentController.class).one(content.getId())).withSelfRel(),
-                linkTo(methodOn(ContentController.class).all()).withRel("content"));
+                linkTo(methodOn(ContentController.class).one(null, content.getId())).withSelfRel(),
+                linkTo(methodOn(ContentController.class).all(null)).withRel("content"));
     }
 }

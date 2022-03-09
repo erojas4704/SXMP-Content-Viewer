@@ -1,6 +1,7 @@
 package com.eddiejrojas.SXMproject.auth;
 
 import com.eddiejrojas.SXMproject.security.JWTUtils;
+import com.eddiejrojas.SXMproject.users.exceptions.UserNotFoundException;
 import com.eddiejrojas.SXMproject.users.models.AuthorizedUser;
 import com.eddiejrojas.SXMproject.users.models.LoginDetails;
 import com.eddiejrojas.SXMproject.users.models.User;
@@ -40,8 +41,7 @@ public class AuthController {
         // TODO delegate this to a service
         registerUser.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         User newUser = repository.save(registerUser);
-        LoginDetails loginDetails = new LoginDetails(newUser.getUsername(), registerUser.getPassword());
-        String token = jwtUtils.generateToken(loginDetails);
+        String token = jwtUtils.generateToken(newUser);
         AuthorizedUser authorizedUser = new AuthorizedUser(newUser.getUsername(), token,
                 jwtUtils.getExpirationDateFromToken(token));
 
@@ -55,17 +55,18 @@ public class AuthController {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword()));
+            User user = repository.findByUsername(loginDetails.getUsername())
+                    .orElseThrow(() -> new UserNotFoundException(loginDetails.getUsername()));
+
+            String token = jwtUtils.generateToken(user);
+            AuthorizedUser userAuth = new AuthorizedUser();
+            userAuth.setToken(token);
+            userAuth.setUsername(loginDetails.getUsername());
+            userAuth.setExpires(jwtUtils.getExpirationDateFromToken(token));
+            return ResponseEntity.ok(userAuth);
 
         } catch (Exception err) {
             throw new Exception("Invalid username or password");
         }
-
-        String token = jwtUtils.generateToken(loginDetails);
-        AuthorizedUser user = new AuthorizedUser();
-        user.setToken(token);
-        user.setUsername(loginDetails.getUsername());
-        user.setExpires(jwtUtils.getExpirationDateFromToken(token));
-
-        return ResponseEntity.ok(user);
     }
 }

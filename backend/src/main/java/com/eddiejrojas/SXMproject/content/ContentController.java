@@ -1,14 +1,18 @@
 package com.eddiejrojas.SXMproject.content;
 
 import com.eddiejrojas.SXMproject.reactions.Reaction;
-import com.eddiejrojas.SXMproject.users.services.UserRepository;
+import com.eddiejrojas.SXMproject.users.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.Jwt;
 
 import java.net.URI;
 import java.security.Principal;
@@ -28,14 +32,13 @@ class ContentController {
     }
 
     @GetMapping("")
-    List<Content> all() {
-        return repository.findAll();
+    List<Content> all(User user) {
+        List<Content> content = contentService.findAllContent(1, user);
+        return content;
     }
 
     @GetMapping("/{id}")
-    Content one(Authentication authentication, @PathVariable Long id) {
-        String username = authentication.getName();
-        //User user = UserRepository.findByUsername(username);
+    Content one(User user, @PathVariable Long id) {
         Content content = repository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
 

@@ -1,10 +1,4 @@
 package com.eddiejrojas.SXMproject.content;
-
-import java.util.Set;
-
-import com.eddiejrojas.SXMproject.reactions.Reaction;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 
 @Entity

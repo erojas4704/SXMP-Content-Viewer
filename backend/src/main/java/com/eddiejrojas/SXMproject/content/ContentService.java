@@ -1,6 +1,5 @@
 package com.eddiejrojas.SXMproject.content;
 
-import java.util.Set;
 
 import com.eddiejrojas.SXMproject.reactions.ContentReactionKey;
 import com.eddiejrojas.SXMproject.reactions.Reaction;
@@ -57,9 +56,9 @@ public class ContentService {
         Long userId = user.getId();
         Reaction reaction = getOrCreateReaction(userId, contentId);
         reaction.setIsFavorite(favorite);
+        reactionRepository.save(reaction);
 
         return reaction;
     }
 
-    
 }

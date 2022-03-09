@@ -1,12 +1,10 @@
 package com.eddiejrojas.SXMproject.users.models;
 
-import com.eddiejrojas.SXMproject.reactions.Reaction;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
