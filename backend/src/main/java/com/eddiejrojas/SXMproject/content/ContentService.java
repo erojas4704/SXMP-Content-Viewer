@@ -80,8 +80,6 @@ public class ContentService {
 
     public Reaction userFavoritesContent(Long userId, Long contentId, Boolean favorite)
             throws UsernameNotFoundException {
-        // TODO just grab the Id and take it in the param to make these 2 a little
-        // cleaner.
 
         Reaction reaction = getOrCreateReaction(userId, contentId);
         reaction.setIsFavorite(favorite);

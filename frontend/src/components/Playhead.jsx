@@ -1,9 +1,15 @@
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import {
+  HandThumbsDown,
+  HandThumbsUp,
+  Star,
+  StarFill,
+  StarHalf,
+} from "react-bootstrap-icons";
 import "./css/Playhead.css";
 import PlayButton from "./PlayButton";
 import Timeline from "./Timeline";
+import ToggleIconButton from "./ToggleIconButton";
 
 const Playhead = (props) => {
   const { onToggle, audio } = props;
@@ -36,24 +42,23 @@ const Playhead = (props) => {
     <div {...props} className={"playhead " + (props.className || "")}>
       <PlayButton onClick={onToggle} isPlaying={isPlaying} />
       <Timeline currentTime={seconds} duration={duration} onScrub={onScrub} />
-      {/* I don't like these thumb icons */}
-      {/* <FontAwesomeIcon
-        style={{ paddingLeft: "5px", paddingRight: "5px" }}
-        icon={faThumbsUp}
-        color={"white"}
-        size={"xl"}
+
+      <ToggleIconButton
+        icon={<HandThumbsUp />}
+        colorToggled="#3498db"
+        size={22}
       />
-      <FontAwesomeIcon
-        style={{ paddingLeft: "5px", paddingRight: "5px" }}
-        icon={faThumbsDown}
-        color={"white"}
-        size={"xl"}
-      />*/}
-      <FontAwesomeIcon
-        style={{ paddingLeft: "5px", paddingRight: "5px" }}
-        icon={faSquarePlus}
-        color={"white"}
-        size={"xl"}
+      <ToggleIconButton
+        icon={<HandThumbsDown />}
+        colorToggled="#e74c3c"
+        size={22}
+      />
+      <ToggleIconButton
+        icon={<Star />}
+        iconToggled={<StarFill />}
+        iconHover={<StarHalf />}
+        colorToggled="#f1c40f"
+        size={22}
       />
     </div>
   );

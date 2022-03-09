@@ -6,4 +6,11 @@
   flex-direction: row;
   align-content: center;
   margin-right: 8px;
+  padding-right: 4px;
+}
+
+.playhead-control{
+  color: white;
+  font-size: 32;
+  height: 100%;
 }
