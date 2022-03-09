@@ -57,10 +57,7 @@ export const contentSlice = createSlice({
       .addCase(reactToContent.fulfilled, (state, action) => {
         const { contentId, rating, isFavorite } = action.meta.arg;
         const content = state.content[contentId];
-        content.status = "fulfilled";
-        content.rating = rating || content.rating;
-        content.isFavorite =
-          isFavorite !== null ? isFavorite : content.isFavorite;
+        content = action.payload;
       });
   },
 });
