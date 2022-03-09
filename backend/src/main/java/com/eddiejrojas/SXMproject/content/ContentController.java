@@ -8,7 +8,7 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -105,5 +105,16 @@ class ContentController {
     ResponseEntity<?> deleteContent(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<?> search(User user, @RequestParam String term) {
+        try {
+            Long userId = user == null ? -1 : user.getId();
+            contentService.searchContent(userId, term);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

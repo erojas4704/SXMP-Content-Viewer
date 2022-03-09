@@ -1,0 +1,11 @@
+mutation CreateAccessTokenRequest($clientId: String!, $clientSecret: String!) {
+	requestAccessToken(
+		input: {
+			grant_type: CLIENT_CREDENTIALS
+			client_id: $clientId
+			client_secret: $clientSecret
+		}
+	) {
+		access_token
+	}
+}

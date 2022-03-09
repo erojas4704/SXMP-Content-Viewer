@@ -1,1 +1,0 @@
-# SXMP Onboarding Project

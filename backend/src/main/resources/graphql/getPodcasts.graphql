@@ -1,0 +1,16 @@
+query {
+  podcasts(searchTerm: $searchTerm, filters: { language: "en" }) {
+    data {
+      title
+      description
+      episodes(first: 5) {
+        data {
+          audioUrl
+          description
+          id
+          imageUrl
+        }
+      }
+    }
+  }
+}

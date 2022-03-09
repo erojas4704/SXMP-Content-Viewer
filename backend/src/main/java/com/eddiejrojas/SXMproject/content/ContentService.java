@@ -1,10 +1,12 @@
 package com.eddiejrojas.SXMproject.content;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.eddiejrojas.SXMproject.api.Api;
 import com.eddiejrojas.SXMproject.reactions.ContentReactionKey;
 import com.eddiejrojas.SXMproject.reactions.Reaction;
 import com.eddiejrojas.SXMproject.reactions.ReactionRepository;
@@ -18,6 +20,20 @@ public class ContentService {
     private ContentRepository contentRepository;
     @Autowired
     private ReactionRepository reactionRepository;
+    @Autowired
+    private Api api;
+
+    /**
+     * Makes a call to an external API to search for new content.
+     * If the content does not exist in our local database, it is added.
+     * Also searches the local database for content.
+     * 
+     * @param searchTerm
+     * @return A list of content that matches the search term.
+     */
+    public void searchContent(Long userId, String searchTerm) throws IOException {
+        api.searchPodcasts(searchTerm);
+    }
 
     /**
      * Finds content by id.
