@@ -9,8 +9,24 @@
   padding-right: 4px;
 }
 
-.playhead-control{
+.playhead-control {
   color: white;
   font-size: 32;
   height: 100%;
+}
+
+.playhead-text {
+  color: white;
+  white-space: nowrap;
+  font-size: 10pt;
+  align-self: center;
+  margin: 0 2px 0 1px;
+}
+
+.playhead-text.likes {
+  color: #2ecc71;
+}
+
+.playhead-text.dislikes {
+  color: #e74c3c;
 }

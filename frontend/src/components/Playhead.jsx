@@ -58,6 +58,7 @@ const Playhead = (props) => {
           dispatch(reactToContent({ contentId: content.id, rating: 1 }))
         }
       />
+      <span className="playhead-text likes">{content?.likes || 0}</span>
       <ToggleIconButton
         isToggled={content?.rating === -1}
         icon={<HandThumbsDown />}
@@ -68,6 +69,7 @@ const Playhead = (props) => {
           dispatch(reactToContent({ contentId: content.id, rating: -1 }))
         }
       />
+      <span className="playhead-text dislikes">{content?.dislike || 0}</span>
       <ToggleIconButton
         isToggled={content?.isFavorite}
         icon={<Star />}
