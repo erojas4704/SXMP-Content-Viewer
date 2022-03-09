@@ -76,39 +76,34 @@ class ContentController {
     }
 
     @PutMapping("/{id}/like")
-    ResponseEntity<?> likeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
-        String username = authentication.getName();
-        Reaction react = contentService.userReactsToContent(username, id, 1);
+    ResponseEntity<?> likeContent(User user, @PathVariable Long id) {
+        Reaction react = contentService.userReactsToContent(user.getId(), id, 1);
         return ResponseEntity.ok().body(react);
     }
 
     @PutMapping("/{id}/dislike")
-    ResponseEntity<?> dislikeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
-        String username = authentication.getName();
-        Reaction react = contentService.userReactsToContent(username, id, -1);
+    ResponseEntity<?> dislikeContent(User user, @PathVariable Long id) {
+        Reaction react = contentService.userReactsToContent(user.getId(), id, -1);
         return ResponseEntity.ok().body(react);
     }
 
     @PutMapping("/{id}/unlike")
-    ResponseEntity<?> unlikeContent(Authentication authentication, Principal principal, @PathVariable Long id) {
-        String username = authentication.getName();
-        Reaction react = contentService.userReactsToContent(username, id, 0);
+    ResponseEntity<?> unlikeContent(User user, @PathVariable Long id) {
+        Reaction react = contentService.userReactsToContent(user.getId(), id, 0);
         return ResponseEntity.ok().body(react);
     }
 
     @PutMapping("/{id}/favorite")
-    ResponseEntity<?> favoriteContent(Authentication authentication, Principal principal, @PathVariable Long id) {
-        String username = authentication.getName();
-        Reaction react = contentService.userFavoritesContent(username, id, true);
+    ResponseEntity<?> favoriteContent(User user, @PathVariable Long id) {
+        Reaction react = contentService.userFavoritesContent(user.getId(), id, true);
         return ResponseEntity.ok().body(react);
     }
 
     // TODO lots of duplicate code here. You can probably use some param trickery to
     // condense these routes.
     @PutMapping("/{id}/unfavorite")
-    ResponseEntity<?> unfavoriteContent(Authentication authentication, Principal principal, @PathVariable Long id) {
-        String username = authentication.getName();
-        Reaction react = contentService.userFavoritesContent(username, id, false);
+    ResponseEntity<?> unfavoriteContent(User user, @PathVariable Long id) {
+        Reaction react = contentService.userFavoritesContent(user.getId(), id, false);
         return ResponseEntity.ok().body(react);
     }
 

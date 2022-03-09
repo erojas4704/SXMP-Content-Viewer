@@ -65,12 +65,9 @@ public class ContentService {
         return reaction;
     }
 
-    public Reaction userReactsToContent(String username, Long contentId, int rating)
+    public Reaction userReactsToContent(Long userId, Long contentId, int rating)
             throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        Long userId = user.getId();
         Reaction reaction = getOrCreateReaction(userId, contentId);
 
         reaction.setContent(contentId);
@@ -81,14 +78,11 @@ public class ContentService {
         return reaction;
     }
 
-    public Reaction userFavoritesContent(String username, Long contentId, Boolean favorite)
+    public Reaction userFavoritesContent(Long userId, Long contentId, Boolean favorite)
             throws UsernameNotFoundException {
         // TODO just grab the Id and take it in the param to make these 2 a little
         // cleaner.
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        Long userId = user.getId();
         Reaction reaction = getOrCreateReaction(userId, contentId);
         reaction.setIsFavorite(favorite);
         reactionRepository.save(reaction);
