@@ -8,10 +8,17 @@ export const getAllContent = createAsyncThunk(
   }
 );
 
+export const reactToContent = createAsyncThunk(
+  "content/reactToContent",
+  async (reaction) => {
+    return await Api.reactToContent(reaction);
+  }
+);
+
 export const contentSlice = createSlice({
   name: "content",
   initialState: {
-    content: [],
+    content: {},
     status: "idle",
     nowPlaying: null,
   },
@@ -34,5 +41,6 @@ export const contentSlice = createSlice({
   },
 });
 
+export const getContent = (state) => Object.values(state.content.content);
 export const { play } = contentSlice.actions;
 export default contentSlice.reducer;

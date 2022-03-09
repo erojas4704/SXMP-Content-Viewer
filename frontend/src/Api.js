@@ -4,7 +4,7 @@ export const client = axios.create({
   baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
-  }
+  },
 });
 
 export default class Api {
@@ -63,10 +63,22 @@ export default class Api {
       return response.data;
     } catch (err) {
       console.log("There was an error");
-      console.log(err);
+      console.error(err);
       client.defaults.headers.authorization = null;
       throw err;
     }
+  }
+
+  /**
+   * Calls upon the API to set an user's reaction to a particular content.
+   * @param {Number} reaction A score between -1 and 1. 1 Being liked, -1 being disliked, 0 being ambivalent.
+   */
+  static async reactToContent(reaction) {
+    const likeRoute =
+      reaction === 0 ? "unlike" : reaction === 1 ? "like" : "dislike";
+
+    const response = await client.put(`/content/:id/${likeRoute}`);
+    return response.data;
   }
 
   static setStore(store) {
