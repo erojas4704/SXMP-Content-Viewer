@@ -32,8 +32,8 @@ class ContentController {
     }
 
     @GetMapping("")
-    List<Content> all(User user) {
-        List<Content> content = contentService.findAllContent(1, user);
+    List<UserContent> all(User user) {
+        List<UserContent> content = contentService.findAllContent(user);
         return content;
     }
 

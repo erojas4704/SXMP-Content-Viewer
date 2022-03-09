@@ -4,6 +4,9 @@ public class LoginDetails {
     private String username;
     private String password;
 
+    public LoginDetails() {
+    }
+
     public LoginDetails(String email, String password) {
         this.username = email;
         this.password = password;
@@ -25,7 +28,7 @@ public class LoginDetails {
         this.password = value;
     }
 
-    public String toString(){
+    public String toString() {
         return String.format("Username: %s Pass: %s", this.getUsername(), this.getPassword());
     }
 }
