@@ -4,9 +4,9 @@ body {
 }
 
 .main {
+  background-color: black;
   padding-top: 3rem;
   padding-bottom: 3rem;
-  height: 100vh;
 }
 
 .bottom-bar {
