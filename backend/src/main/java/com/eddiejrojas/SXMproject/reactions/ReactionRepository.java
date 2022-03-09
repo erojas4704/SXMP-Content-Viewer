@@ -7,4 +7,6 @@ public interface ReactionRepository extends JpaRepository<Reaction, ContentReact
     List<Reaction> findAllByUserId(Long userId);
 
     List<Reaction> findAllByContentId(Long contentId);
+
+    Reaction findByUserIdAndContentId(Long userId, Long contentId);
 }

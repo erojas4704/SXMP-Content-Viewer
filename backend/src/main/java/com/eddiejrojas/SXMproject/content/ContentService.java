@@ -23,6 +23,24 @@ public class ContentService {
     private ReactionRepository reactionRepository;
 
     /**
+     * Finds content by id.
+     * @param user The user making the request. Can be null.
+     * @param id The id of the content to find.
+     * @return The UserContent object, that includes the user's own reaction as well as the reactions of other users.
+     */
+    public UserContent findContent(User user, Long id) {
+        Content content = contentRepository.findById(id)
+                .orElseThrow(() -> new ContentNotFoundException(id));
+
+        //TODO repetition here. This method can be extracted and condensed.
+        Reaction reaction = reactionRepository.findByUserIdAndContentId(user.getId(), content.getId());
+        UserContent userContent = new UserContent(content, reaction);
+        userContent.setLikes(contentRepository.getLikesForContent(content.getId()));
+        userContent.setDislikes(contentRepository.getDislikesForContent(content.getId()));
+        return userContent;
+    }
+
+    /**
      * Finds all the content in the database.
      * The content is then merged with the user's reactions, if any.
      * 

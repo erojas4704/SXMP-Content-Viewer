@@ -38,10 +38,8 @@ class ContentController {
     }
 
     @GetMapping("/{id}")
-    Content one(User user, @PathVariable Long id) {
-        Content content = repository.findById(id)
-                .orElseThrow(() -> new ContentNotFoundException(id));
-
+    UserContent one(User user, @PathVariable Long id) {
+        UserContent content = contentService.findContent(user, id);
         return content;
     }
 
