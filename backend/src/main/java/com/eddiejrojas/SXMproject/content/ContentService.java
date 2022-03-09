@@ -35,8 +35,8 @@ public class ContentService {
         List<Content> content = contentRepository.findAll();
 
         if (user == null) {
-            content.stream()
-                    .map(c -> (UserContent) c)
+            return content.stream()
+                    .map(c -> new UserContent(c))
                     .collect(Collectors.toList());
         }
 
@@ -44,6 +44,7 @@ public class ContentService {
         Map<Long, Reaction> reactions = reactionRepository.findAllByUserId(user.getId()).stream().collect(
                 Collectors.toMap(Reaction::getContent, Function.identity()));
 
+        // TODO refactor. DRY
         return content.stream()
                 .map(c -> {
                     Reaction reaction = reactions.get(c.getId());
@@ -65,7 +66,7 @@ public class ContentService {
     }
 
     public Reaction userReactsToContent(String username, Long contentId, int rating)
-            throws ContentNotFoundException, UsernameNotFoundException {
+            throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
@@ -80,7 +81,8 @@ public class ContentService {
         return reaction;
     }
 
-    public Reaction userFavoritesContent(String username, Long contentId, Boolean favorite) {
+    public Reaction userFavoritesContent(String username, Long contentId, Boolean favorite)
+            throws UsernameNotFoundException {
         // TODO just grab the Id and take it in the param to make these 2 a little
         // cleaner.
         User user = userRepository.findByUsername(username)

@@ -16,6 +16,10 @@ public class UserContent extends Content {
     public UserContent() {
     }
 
+    public UserContent(Content content){
+        BeanUtils.copyProperties(content, this);
+    }
+
     public UserContent(Content content, Reaction reaction) {
         BeanUtils.copyProperties(content, this);
         if (reaction != null) {
