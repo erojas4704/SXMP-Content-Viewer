@@ -8,11 +8,8 @@ import java.util.stream.Collectors;
 import com.eddiejrojas.SXMproject.reactions.ContentReactionKey;
 import com.eddiejrojas.SXMproject.reactions.Reaction;
 import com.eddiejrojas.SXMproject.reactions.ReactionRepository;
-import com.eddiejrojas.SXMproject.users.models.User;
-import com.eddiejrojas.SXMproject.users.services.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,16 +21,18 @@ public class ContentService {
 
     /**
      * Finds content by id.
-     * @param user The user making the request. Can be null.
-     * @param id The id of the content to find.
-     * @return The UserContent object, that includes the user's own reaction as well as the reactions of other users.
+     * 
+     * @param user The user making the request. Can be -1 for null.
+     * @param id   The id of the content to find.
+     * @return The UserContent object, that includes the user's own reaction as well
+     *         as the reactions of other users.
      */
-    public UserContent findContent(User user, Long id) {
+    public UserContent findContent(Long userId, Long id) {
         Content content = contentRepository.findById(id)
                 .orElseThrow(() -> new ContentNotFoundException(id));
 
-        //TODO repetition here. This method can be extracted and condensed.
-        Reaction reaction = reactionRepository.findByUserIdAndContentId(user.getId(), content.getId());
+        // TODO repetition here. This method can be extracted and condensed.
+        Reaction reaction = reactionRepository.findByUserIdAndContentId(userId, content.getId());
         UserContent userContent = new UserContent(content, reaction);
         userContent.setLikes(contentRepository.getLikesForContent(content.getId()));
         userContent.setDislikes(contentRepository.getDislikesForContent(content.getId()));
@@ -47,17 +46,17 @@ public class ContentService {
      * @param user The user who is requesting the content.
      * @return A list of all the content in the database.
      */
-    public List<UserContent> findAllContent(User user) {
+    public List<UserContent> findAllContent(Long userId) {
         List<Content> content = contentRepository.findAll();
 
-        if (user == null) {
+        if (userId == -1) {
             return content.stream()
                     .map(c -> new UserContent(c))
                     .collect(Collectors.toList());
         }
 
         // TODO pagination support.
-        Map<Long, Reaction> reactions = reactionRepository.findAllByUserId(user.getId()).stream().collect(
+        Map<Long, Reaction> reactions = reactionRepository.findAllByUserId(userId).stream().collect(
                 Collectors.toMap(Reaction::getContent, Function.identity()));
 
         // TODO refactor. DRY
@@ -83,8 +82,7 @@ public class ContentService {
         return reaction;
     }
 
-    public Reaction userReactsToContent(Long userId, Long contentId, int rating)
-            throws UsernameNotFoundException {
+    public UserContent userReactsToContent(Long userId, Long contentId, int rating) {
 
         Reaction reaction = getOrCreateReaction(userId, contentId);
 
@@ -93,17 +91,16 @@ public class ContentService {
         reaction.setRating(rating);
         reactionRepository.save(reaction);
 
-        return reaction;
+        return findContent(userId, contentId);
     }
 
-    public Reaction userFavoritesContent(Long userId, Long contentId, Boolean favorite)
-            throws UsernameNotFoundException {
+    public UserContent userFavoritesContent(Long userId, Long contentId, Boolean favorite) {
 
         Reaction reaction = getOrCreateReaction(userId, contentId);
         reaction.setIsFavorite(favorite);
         reactionRepository.save(reaction);
 
-        return reaction;
+        return findContent(userId, contentId);
     }
 
 }

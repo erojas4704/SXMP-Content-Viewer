@@ -33,13 +33,15 @@ class ContentController {
 
     @GetMapping("")
     List<UserContent> all(User user) {
-        List<UserContent> content = contentService.findAllContent(user);
+        Long userId = user == null ? -1 : user.getId();
+        List<UserContent> content = contentService.findAllContent(userId);
         return content;
     }
 
     @GetMapping("/{id}")
     UserContent one(User user, @PathVariable Long id) {
-        UserContent content = contentService.findContent(user, id);
+        Long userId = user == null ? -1 : user.getId();
+        UserContent content = contentService.findContent(userId, id);
         return content;
     }
 
@@ -75,34 +77,34 @@ class ContentController {
 
     @PutMapping("/{id}/like")
     ResponseEntity<?> likeContent(User user, @PathVariable Long id) {
-        Reaction react = contentService.userReactsToContent(user.getId(), id, 1);
-        return ResponseEntity.ok().body(react);
+        UserContent userContent = contentService.userReactsToContent(user.getId(), id, 1);
+        return ResponseEntity.ok().body(userContent);
     }
 
     @PutMapping("/{id}/dislike")
     ResponseEntity<?> dislikeContent(User user, @PathVariable Long id) {
-        Reaction react = contentService.userReactsToContent(user.getId(), id, -1);
-        return ResponseEntity.ok().body(react);
+        UserContent userContent = contentService.userReactsToContent(user.getId(), id, -1);
+        return ResponseEntity.ok().body(userContent);
     }
 
     @PutMapping("/{id}/unlike")
     ResponseEntity<?> unlikeContent(User user, @PathVariable Long id) {
-        Reaction react = contentService.userReactsToContent(user.getId(), id, 0);
-        return ResponseEntity.ok().body(react);
+        UserContent userContent = contentService.userReactsToContent(user.getId(), id, 0);
+        return ResponseEntity.ok().body(userContent);
     }
 
     @PutMapping("/{id}/favorite")
     ResponseEntity<?> favoriteContent(User user, @PathVariable Long id) {
-        Reaction react = contentService.userFavoritesContent(user.getId(), id, true);
-        return ResponseEntity.ok().body(react);
+        UserContent userContent = contentService.userFavoritesContent(user.getId(), id, true);
+        return ResponseEntity.ok().body(userContent);
     }
 
     // TODO lots of duplicate code here. You can probably use some param trickery to
     // condense these routes.
     @PutMapping("/{id}/unfavorite")
     ResponseEntity<?> unfavoriteContent(User user, @PathVariable Long id) {
-        Reaction react = contentService.userFavoritesContent(user.getId(), id, false);
-        return ResponseEntity.ok().body(react);
+        UserContent userContent = contentService.userFavoritesContent(user.getId(), id, false);
+        return ResponseEntity.ok().body(userContent);
     }
 
     @DeleteMapping("/{id}")
