@@ -14,6 +14,7 @@ const ToggleIconButton = (props) => {
       className="toggle-icon-button"
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
       style={{
         color: isHovered || isToggled ? colorToggled : "",
       }}

@@ -58,7 +58,6 @@ export default class Api {
   static async login(username, password) {
     try {
       const response = await client.post("/auth/login", { username, password });
-      //TODO change reponse to be an object with token and user data.
       client.defaults.headers.authorization = `Bearer ${response.data.token}`;
       return response.data;
     } catch (err) {
@@ -71,13 +70,14 @@ export default class Api {
 
   /**
    * Calls upon the API to set an user's reaction to a particular content.
-   * @param {Number} reaction A score between -1 and 1. 1 Being liked, -1 being disliked, 0 being ambivalent.
+   * @param {Number} id The id of the content to react to.
+   * @param {Number} rating A score between -1 and 1. 1 Being liked, -1 being disliked, 0 being ambivalent.
+   * @param {Boolean} isFavorite Should the content be favorited? If this value is set, the rating will be ignored.
    */
-  static async reactToContent(reaction) {
-    const likeRoute =
-      reaction === 0 ? "unlike" : reaction === 1 ? "like" : "dislike";
+  static async reactToContent(contentId, rating, isFavorite) {
+    const route = this.getRatingRoute(rating, isFavorite);
 
-    const response = await client.put(`/content/:id/${likeRoute}`);
+    const response = await client.put(`/content/${contentId}/${route}`);
     return response.data;
   }
 
@@ -86,5 +86,18 @@ export default class Api {
       const token = store.getState().auth.token;
       client.defaults.headers.authorization = token ? `Bearer ${token}` : null;
     });
+  }
+
+  /*Utils */
+  static getRatingRoute(rating, isFavorite) {
+    if (isFavorite != null) {
+      return isFavorite ? "favorite" : "unfavorite";
+    }
+
+    if (rating === 0) {
+      return "unlike";
+    }
+
+    return rating === 1 ? "like" : "dislike";
   }
 }

@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import {
   HandThumbsDown,
+  HandThumbsDownFill,
   HandThumbsUp,
+  HandThumbsUpFill,
   Star,
   StarFill,
   StarHalf,
 } from "react-bootstrap-icons";
+import { useDispatch } from "react-redux";
+import { reactToContent } from "../redux/content/contentSlice";
 import "./css/Playhead.css";
 import PlayButton from "./PlayButton";
 import Timeline from "./Timeline";
 import ToggleIconButton from "./ToggleIconButton";
 
 const Playhead = (props) => {
-  const { onToggle, audio } = props;
+  const { onToggle, audio, content } = props;
   const isPlaying = audio && !audio.paused;
   const { currentTime, duration } = audio || {};
   const [seconds, setSeconds] = useState(currentTime);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (audio) setSeconds(audio.currentTime);
@@ -44,21 +49,40 @@ const Playhead = (props) => {
       <Timeline currentTime={seconds} duration={duration} onScrub={onScrub} />
 
       <ToggleIconButton
+        isToggled={content?.rating === 1}
         icon={<HandThumbsUp />}
+        iconToggled={<HandThumbsUpFill />}
         colorToggled="#3498db"
         size={22}
+        onClick={() =>
+          dispatch(reactToContent({ contentId: content.id, rating: 1 }))
+        }
       />
       <ToggleIconButton
+        isToggled={content?.rating === -1}
         icon={<HandThumbsDown />}
+        iconToggled={<HandThumbsDownFill />}
         colorToggled="#e74c3c"
         size={22}
+        onClick={() =>
+          dispatch(reactToContent({ contentId: content.id, rating: -1 }))
+        }
       />
       <ToggleIconButton
+        isToggled={content?.isFavorite}
         icon={<Star />}
         iconToggled={<StarFill />}
         iconHover={<StarHalf />}
         colorToggled="#f1c40f"
         size={22}
+        onClick={() =>
+          dispatch(
+            reactToContent({
+              contentId: content.id,
+              isFavorite: !content.isFavorite,
+            })
+          )
+        }
       />
     </div>
   );

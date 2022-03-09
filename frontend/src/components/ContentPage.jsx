@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllContent, getContent } from "../redux/content/contentSlice";
+import { getAllContent, getContentArray } from "../redux/content/contentSlice";
 import ContentPreview from "./ContentPreview";
 import "./css/Content.css";
 
 const ContentPage = () => {
   const dispatch = useDispatch();
-  const content = useSelector((state) => getContent(state));
+  const content = useSelector((state) => getContentArray(state));
 
   useEffect(() => {
     dispatch(getAllContent());

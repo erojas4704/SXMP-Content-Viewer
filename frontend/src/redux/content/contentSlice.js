@@ -10,8 +10,8 @@ export const getAllContent = createAsyncThunk(
 
 export const reactToContent = createAsyncThunk(
   "content/reactToContent",
-  async (reaction) => {
-    return await Api.reactToContent(reaction);
+  async ({ contentId, rating, isFavorite }) => {
+    return await Api.reactToContent(contentId, rating, isFavorite);
   }
 );
 
@@ -28,7 +28,10 @@ export const contentSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllContent.fulfilled, (state, action) => {
-        state.content = action.payload;
+        state.content = action.payload.reduce((acc, curr) => {
+          acc[curr.id] = curr;
+          return acc;
+        }, {});
         state.status = "fulfilled";
       })
       .addCase(getAllContent.pending, (state, action) => {
@@ -37,10 +40,31 @@ export const contentSlice = createSlice({
       .addCase(getAllContent.rejected, (state, action) => {
         state.status = "error";
         state.error = action.payload;
+      })
+      .addCase(reactToContent.pending, (state, action) => {
+        const { contentId, rating, isFavorite } = action.meta.arg;
+        const content = state.content[contentId];
+        content.rating = rating || content.rating;
+        content.isFavorite =
+          isFavorite !== null ? isFavorite : content.isFavorite;
+        content.status = "pending";
+      })
+      .addCase(reactToContent.rejected, (state, action) => {
+        const { contentId } = action.meta.arg;
+        const content = state.content[contentId];
+        content.status = "error";
+      })
+      .addCase(reactToContent.fulfilled, (state, action) => {
+        const { contentId, rating, isFavorite } = action.meta.arg;
+        const content = state.content[contentId];
+        content.status = "fulfilled";
+        content.rating = rating || content.rating;
+        content.isFavorite =
+          isFavorite !== null ? isFavorite : content.isFavorite;
       });
   },
 });
 
-export const getContent = (state) => Object.values(state.content.content);
+export const getContentArray = (state) => Object.values(state.content.content);
 export const { play } = contentSlice.actions;
 export default contentSlice.reducer;
