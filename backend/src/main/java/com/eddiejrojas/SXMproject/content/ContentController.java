@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -41,10 +40,10 @@ class ContentController {
 
     @PostMapping("")
     ResponseEntity<?> newContent(@RequestBody Content newContent) {
-        EntityModel<Content> entityModel = assembler.toModel(repository.save(newContent));
+        UserContent savedContent = contentService.createContent(newContent);
         return ResponseEntity
-                .created(URI.create("")) // TODO reconsider our links
-                .body(entityModel);
+                .ok()
+                .body(savedContent);
     }
 
     @PutMapping("/{id}")

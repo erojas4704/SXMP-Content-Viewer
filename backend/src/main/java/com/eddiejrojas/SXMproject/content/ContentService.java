@@ -112,6 +112,13 @@ public class ContentService {
         return reaction;
     }
 
+    public UserContent createContent(Content newContent) {
+        Long nextId = -contentRepository.getNextAvailableId();
+        //Since we're dealing with locally cached external API's, our content IDs will be negative for content produced in-house.
+        newContent.setId(nextId);
+        return new UserContent(contentRepository.save(newContent));
+    }
+
     public UserContent userReactsToContent(Long userId, Long contentId, int rating) {
 
         Reaction reaction = getOrCreateReaction(userId, contentId);
