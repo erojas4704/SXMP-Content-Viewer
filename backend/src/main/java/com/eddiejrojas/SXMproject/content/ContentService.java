@@ -33,6 +33,7 @@ public class ContentService {
      */
     public List<Content> searchContent(Long userId, String searchTerm) throws IOException {
         List<Content> content = api.searchPodcasts(searchTerm);
+        contentRepository.saveAll(content);
         return content;
     }
 
