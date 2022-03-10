@@ -48,7 +48,13 @@ public class PodcastTransferObject {
             this.episodes = om.convertValue(data.get("data"), new TypeReference<List<Content>>() {
             });
 
+            // Set the title and description of each episode to the podcast title and
+            // description
             this.episodes.stream()
+                    .filter(episode -> {
+                        // Filter out episodes that don't have an audioUrl
+                        return episode.getAudioUrl() != null;
+                    })
                     .forEach(episode -> {
                         episode.setTitle(this.title);
                         episode.setDescription(this.description);

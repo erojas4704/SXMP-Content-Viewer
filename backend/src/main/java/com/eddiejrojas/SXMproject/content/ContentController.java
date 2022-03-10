@@ -53,9 +53,9 @@ class ContentController {
                 .map(content -> {
                     content.setTitle(newContent.getTitle());
                     content.setDescription(newContent.getDescription());
-                    content.setAudioURL(newContent.getAudioURL());
+                    content.setAudioUrl(newContent.getAudioUrl());
                     content.setSource(newContent.getSource());
-                    content.setImageURL(newContent.getImageURL());
+                    content.setImageUrl(newContent.getImageUrl());
                     return repository.save(content);
                 })
                 .orElseGet(() -> {

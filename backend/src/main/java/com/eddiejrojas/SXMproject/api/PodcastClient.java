@@ -2,16 +2,11 @@ package com.eddiejrojas.SXMproject.api;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -34,9 +29,6 @@ public class PodcastClient {
 
         graphQLRequestBody.setQuery(query);
         graphQLRequestBody.setVariables(variables.replace("term", searchTerm));
-
-        ObjectWriter ow = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT).writer()
-                .withDefaultPrettyPrinter();
 
         PodcastTransferObject data = webClient.post()
                 .uri(url)

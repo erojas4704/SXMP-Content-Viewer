@@ -1,7 +1,6 @@
 package com.eddiejrojas.SXMproject.content;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
 
@@ -12,7 +11,6 @@ import jakarta.persistence.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Content {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     @Column(columnDefinition = "text")
@@ -25,13 +23,13 @@ public class Content {
     public Content() {
     }
 
-    Content(String title, String name, String description, String source, String audioURL, String imageURL) {
+    Content(String title, String name, String description, String source, String audioUrl, String imageUrl) {
         this.title = title;
         this.name = name;
         this.description = description;
         this.source = source;
-        this.audioUrl = audioURL;
-        this.imageUrl = imageURL;
+        this.audioUrl = audioUrl;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -66,19 +64,19 @@ public class Content {
         this.source = value;
     }
 
-    public String getAudioURL() {
+    public String getAudioUrl() {
         return this.audioUrl;
     }
 
-    public void setAudioURL(String value) {
+    public void setAudioUrl(String value) {
         this.audioUrl = value;
     }
 
-    public String getImageURL() {
+    public String getImageUrl() {
         return this.imageUrl;
     }
 
-    public void setImageURL(String value) {
+    public void setImageUrl(String value) {
         this.imageUrl = value;
     }
 
