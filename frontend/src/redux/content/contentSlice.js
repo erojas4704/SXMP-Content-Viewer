@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../Api";
-import { v4 as uuid } from "uuid";
 
 export const searchForContent = createAsyncThunk(
   "content/searchForContent",
@@ -164,22 +163,18 @@ export const contentSlice = createSlice({
         state.content[id].status = "fulfilled";
       })
       .addCase(createContent.pending, (state, action) => {
-        action.meta.id = uuid();
-        const { id } = action.meta;
-        state.content[id] = action.meta.arg;
-        state.content[id].status = "pending";
+        state.content.newContent = action.meta.arg;
+        state.content.newContent.status = "pending";
       })
       .addCase(createContent.rejected, (state, action) => {
-        const { id } = action.meta;
-        state.content[id].status = "error";
-        state.content[id].error = action.payload;
+        state.content.newContent.status = "error";
+        state.content.newContent.error = action.payload;
       })
       .addCase(createContent.fulfilled, (state, action) => {
-        const oldId = action.meta.id;
         const { id } = action.payload;
         state.content[id] = action.payload;
-        state.content[id].status = "fulfilled";
-        delete state.content[oldId];
+        state.content.newContent = action.payload;
+        state.content.newContent.status = "fulfilled";
       })
       .addCase(updateContent.pending, (state, action) => {
         const { contentId } = action.meta.arg;

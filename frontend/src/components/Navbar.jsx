@@ -13,6 +13,8 @@ import { useEffect } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import NavRadioGroup from "./NavRadioGroup";
 import NavRadioButton from "./NavRadioButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -66,6 +68,20 @@ const Navbar = () => {
       </NavRadioGroup>
 
       <div style={{ flexGrow: 1 }} />
+      <div
+        style={{
+          flexGrow: 1,
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Link to={{ pathname: "/content/create" }}>
+          <NavButton>
+            <FontAwesomeIcon size="lg" icon={faPlusCircle} />
+          </NavButton>
+        </Link>
+      </div>
       <InlineSearchForm
         defaultValue={searchField}
         onChange={handleSearchChange}
