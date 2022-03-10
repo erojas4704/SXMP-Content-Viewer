@@ -154,8 +154,8 @@ export const seedPodcasts = async (existing = []) => {
     const proc = podcasts.map(podcast => {
         return {
             ...podcast,
-            audioURL: podcast.audio,
-            imageURL: podcast.image,
+            audioUrl: podcast.audio,
+            imageUrl: podcast.image,
             id: hash[podcast.title]? hash[podcast.title].id : null,
         }
     })

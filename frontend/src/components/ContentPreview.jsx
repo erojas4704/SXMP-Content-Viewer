@@ -34,7 +34,7 @@ const ContentPreview = ({ content }) => {
 
   useEffect(() => {
     if (!audio && expanded) {
-      const audio = new Audio(content.audioURL);
+      const audio = new Audio(content.audioUrl);
       setAudio(audio);
       audio.addEventListener("loadedmetadata", onMetadata);
       setStatus("pending");
@@ -52,9 +52,9 @@ const ContentPreview = ({ content }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        backgroundImage: `url(${content.imageURL})`,
+        backgroundImage: `url(${content.imageUrl})`,
         backgroundPosition: "center",
-        backgroundColor: `${content.imageURL ? null : getRandomColor()}`,
+        backgroundColor: `${content.imageUrl ? null : getRandomColor()}`,
       }}
     >
       <div className="content-head" />
