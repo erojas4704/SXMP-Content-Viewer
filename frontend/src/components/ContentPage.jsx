@@ -9,7 +9,8 @@ import { v4 as uuid } from "uuid";
 const ContentPage = () => {
   const dispatch = useDispatch();
   const content = useSelector((state) => getContentArray(state));
-  const { search, status } = useSelector((state) => state.content);
+  const search = useSelector((state) => getContentArray(state, true));
+  const { status } = useSelector((state) => state.content);
 
   const contentArray = search ? search : content;
 

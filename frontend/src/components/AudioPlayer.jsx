@@ -4,7 +4,6 @@ import Marquee from "./Marquee";
 import Playhead from "./Playhead";
 
 const AudioPlayer = ({ children }) => {
-  //TODO condense all this into a custom hook.
   const [currentContent, setCurrentContent] = useState(null);
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);

@@ -54,9 +54,10 @@ const Playhead = (props) => {
         iconToggled={<HandThumbsUpFill />}
         colorToggled="#3498db"
         size={22}
-        onClick={() =>
-          dispatch(reactToContent({ contentId: content.id, rating: 1 }))
-        }
+        enabled={content?.rating < 1}
+        onClick={() => {
+          dispatch(reactToContent({ contentId: content.id, rating: 1 }));
+        }}
       />
       <span className="playhead-text likes">{content?.likes || 0}</span>
       <ToggleIconButton

@@ -26,7 +26,7 @@ export const contentSlice = createSlice({
   name: "content",
   initialState: {
     content: {},
-    search: null,
+    search: [],
     status: "idle",
     nowPlaying: null,
   },
@@ -71,26 +71,35 @@ export const contentSlice = createSlice({
       })
       .addCase(searchForContent.pending, (state, action) => {
         state.status = "pending";
-        state.search = null;
+        state.search = [];
       })
       .addCase(searchForContent.rejected, (state, action) => {
         state.status = "error";
+        state.search = [];
         state.error = action.payload;
       })
       .addCase(searchForContent.fulfilled, (state, action) => {
         //Merge search results with current content.
-        state.current = action.payload.reduce((acc, curr) => {
-          acc[curr.id] = curr;
-          return acc;
-        }, {...state.current});
+        state.content = action.payload.reduce(
+          (acc, curr) => {
+            acc[curr.id] = curr;
+            return acc;
+          },
+          { ...state.content }
+        );
 
-        state.search = action.payload;
+        state.search = action.payload.map((o) => o.id);
         state.status = "fulfilled";
       });
   },
 });
 
-export const getContentArray = (state) => Object.values(state.content.content);
+export const getContentArray = (state, doFilter = false) => {
+  if (doFilter) {
+    return state.content.search.map((o) => state.content.content[o]);
+  }
+  return Object.values(state.content.content);
+};
 
 export const { play } = contentSlice.actions;
 export default contentSlice.reducer;
