@@ -8,6 +8,7 @@ import com.eddiejrojas.SXMproject.users.models.User;
 import com.eddiejrojas.SXMproject.users.services.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,7 +67,7 @@ public class AuthController {
             return ResponseEntity.ok(userAuth);
 
         } catch (Exception err) {
-            throw new Exception("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
 }
