@@ -1,11 +1,15 @@
 package com.eddiejrojas.SXMproject.content;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "content", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")
 })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +19,12 @@ public class Content {
     private String description;
     private String name;
     private String source;
+    @JsonProperty("audioUrl")
     private String audioURL;
+    @JsonProperty("imageUrl")
     private String imageURL;
 
-    Content() {
+    public Content() {
     }
 
     Content(String title, String name, String description, String source, String audioURL, String imageURL) {

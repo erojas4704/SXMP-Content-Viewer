@@ -2,9 +2,9 @@ package com.eddiejrojas.SXMproject.api;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import java.util.List;
+
+import com.eddiejrojas.SXMproject.content.Content;
 
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,10 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class is a service that handles all the logic for calling the external
+ * This class is a client that handles all the logic for calling the external
  * Podcast/Music provider service.
  */
 @Slf4j
@@ -43,12 +39,14 @@ public class Api {
     Api() {
     }
 
-    public String searchPodcasts(String searchTerm) throws IOException {
-        PodcastTransfer pto = podcastClient.searchPodcasts(searchTerm, accessToken);
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    public List<Content> searchPodcasts(String searchTerm) throws IOException {
+        PodcastTransferObject pto = podcastClient.searchPodcasts(searchTerm, accessToken);
 
-        log.info(ow.writeValueAsString(pto));
-        return "";
+        return pto.getPodcasts()
+                .stream()
+                .map(o -> o.getEpisodes())
+                .flatMap(x -> x.stream())
+                .toList();
     }
 
     @PostConstruct

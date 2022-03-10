@@ -1,4 +1,4 @@
-query {
+query GetPodcasts($searchTerm: String!) {
   podcasts(searchTerm: $searchTerm, filters: { language: "en" }) {
     data {
       title

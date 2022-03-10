@@ -31,8 +31,9 @@ public class ContentService {
      * @param searchTerm
      * @return A list of content that matches the search term.
      */
-    public void searchContent(Long userId, String searchTerm) throws IOException {
-        api.searchPodcasts(searchTerm);
+    public List<Content> searchContent(Long userId, String searchTerm) throws IOException {
+        List<Content> content = api.searchPodcasts(searchTerm);
+        return content;
     }
 
     /**

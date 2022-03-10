@@ -1,0 +1,59 @@
+package com.eddiejrojas.SXMproject.api;
+
+import java.util.Map;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.eddiejrojas.SXMproject.content.Content;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PodcastTransferObject {
+    private List<Podcast> podcasts;
+
+    @SuppressWarnings("unchecked")
+    @JsonProperty("data")
+    private void unpackNested(Map<String, Object> data) {
+        Map<String, Object> podcastResponse = (Map<String, Object>) data.get("podcasts");
+        List<Object> rawPodcasts = (List<Object>) podcastResponse.get("data");
+        ObjectMapper om = new ObjectMapper();
+        this.podcasts = om.convertValue(rawPodcasts, new TypeReference<List<Podcast>>() {
+        });
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class Podcast {
+        private String title;
+        private String description;
+
+        @JsonIgnore
+        private List<Content> episodes;
+
+        @JsonProperty("episodes")
+        private void unpackEpisodes(Map<String, Object> data) {
+            ObjectMapper om = new ObjectMapper();
+            this.episodes = om.convertValue(data.get("data"), new TypeReference<List<Content>>() {
+            });
+
+            this.episodes.stream()
+                    .forEach(episode -> {
+                        episode.setTitle(this.title);
+                        episode.setDescription(this.description);
+                    });
+        }
+    }
+}
