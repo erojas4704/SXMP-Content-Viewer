@@ -3,7 +3,6 @@
   background-color: black;
   color: white;
   display: flex;
-
   padding: 0px 1rem 0px 1rem;
   overflow: hidden;
   top: 0;
@@ -12,3 +11,13 @@
   z-index: 999;
 }
 
+.nav > *{
+  height: 100%;
+  align-self: center;
+  margin: auto;
+}
+
+.nav-logo{
+  font-weight: bold;
+  font-size: 1.5rem;
+}

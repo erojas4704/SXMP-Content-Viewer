@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import "./css/InlineSearchForm.css";
 
-const InlineSearchForm = ({ onSubmit }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const InlineSearchForm = ({ onSubmit, onChange, defaultValue }) => {
+  const [searchTerm, setSearchTerm] = useState(defaultValue || "");
   const inputRef = useRef();
 
   const handleClick = (e) => {
     inputRef.current.focus();
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +18,15 @@ const InlineSearchForm = ({ onSubmit }) => {
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
+    onChange(e.target.value);
   };
 
   return (
-    <form className="inline-search-form" onSubmit={handleSubmit} onClick={handleClick}>
+    <form
+      className="inline-search-form"
+      onSubmit={handleSubmit}
+      onClick={handleClick}
+    >
       <input
         ref={inputRef}
         className="nav-search-input"

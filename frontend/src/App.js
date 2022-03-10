@@ -22,6 +22,7 @@ function App() {
             <div className="main">
               <Routes>
                 <Route path="/" exact element={<ContentPage />} />
+                <Route path="/playlist" element={<ContentPage onlyShowFavorites={true} />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />

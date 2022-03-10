@@ -28,10 +28,19 @@ export const contentSlice = createSlice({
     content: {},
     search: [],
     status: "idle",
+    searchField: "",
+    sortBy: null,
     nowPlaying: null,
   },
 
-  reducers: {},
+  reducers: {
+    setSearchField: (state, action) => {
+      state.searchField = action.payload;
+    },
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -52,9 +61,16 @@ export const contentSlice = createSlice({
       .addCase(reactToContent.pending, (state, action) => {
         const { contentId, rating, isFavorite } = action.meta.arg;
         const content = state.content[contentId];
+        const previousRating = content.rating;
+
         content.rating = rating || content.rating;
-        if (rating > 0) content.likes++;
-        else if (rating < 0) content.dislikes++;
+        if (rating > 0) {
+          content.likes++;
+          content.dislikes -= Math.abs(previousRating);
+        } else if (rating < 0) {
+          content.dislikes++;
+          content.likes -= Math.abs(previousRating);
+        }
 
         content.isFavorite =
           isFavorite !== null ? isFavorite : content.isFavorite;
@@ -95,11 +111,12 @@ export const contentSlice = createSlice({
 });
 
 export const getContentArray = (state, doFilter = false) => {
-  if (doFilter) {
-    return state.content.search.map((o) => state.content.content[o]);
-  }
-  return Object.values(state.content.content);
+  const contentArr = doFilter
+    ? state.content.search.map((o) => state.content.content[o])
+    : Object.values(state.content.content);
+
+  return contentArr;
 };
 
-export const { play } = contentSlice.actions;
+export const { play, setSearchField, setSortBy } = contentSlice.actions;
 export default contentSlice.reducer;

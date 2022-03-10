@@ -1,8 +1,12 @@
 .toggle-icon-button {
-    color: white;
-    margin: 0 1px 0 1px;
+  color: white;
+  margin: 0 1px 0 1px;
 }
 
-.toggle-icon-button:hover{
-    cursor: pointer;
+.toggle-icon-button:hover {
+  cursor: pointer;
+}
+
+.disabled {
+  pointer-events: none;
 }

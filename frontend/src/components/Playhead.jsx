@@ -54,7 +54,7 @@ const Playhead = (props) => {
         iconToggled={<HandThumbsUpFill />}
         colorToggled="#3498db"
         size={22}
-        enabled={content?.rating < 1}
+        disabled={content?.rating > 0}
         onClick={() => {
           dispatch(reactToContent({ contentId: content.id, rating: 1 }));
         }}
@@ -66,6 +66,7 @@ const Playhead = (props) => {
         iconToggled={<HandThumbsDownFill />}
         colorToggled="#e74c3c"
         size={22}
+        disabled={content?.rating < 0}
         onClick={() =>
           dispatch(reactToContent({ contentId: content.id, rating: -1 }))
         }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./css/ToggleIconButton.css";
 
 const ToggleIconButton = (props) => {
-  const { onClick, isToggled, icon, colorToggled, size } = props;
+  const { onClick, isToggled, icon, colorToggled, size, disabled } = props;
   const iconToggled = props.iconToggled || icon;
   const iconHover = props.iconHover || icon;
 
@@ -11,7 +11,7 @@ const ToggleIconButton = (props) => {
 
   return (
     <div
-      className="toggle-icon-button"
+      className={`toggle-icon-button ${disabled ? "disabled" : ""}`}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
