@@ -6,6 +6,7 @@
   flex-direction: column;
   background-size: cover;
   background-repeat: no-repeat;
+  margin: 0 0 1px 1px;
   /* cursor: pointer; */
 }
 
@@ -18,9 +19,7 @@
     rgba(0, 0, 0, 0.6) 30%,
     rgba(0, 0, 0, 1) 70%
   );
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
 }
 
 .content-head {

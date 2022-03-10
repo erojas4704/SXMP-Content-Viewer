@@ -3,7 +3,8 @@ import ContentDescription from "./ContentDescription";
 import Playhead from "./Playhead";
 import NowPlayingContext from "../contexts/NowPlayingContext";
 import useRandomColor from "../hooks/useRandomColor";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPodcast } from "@fortawesome/free-solid-svg-icons";
 
 const ContentPreview = ({ content }) => {
   //TODO rename to ContentPlayer
@@ -38,6 +39,7 @@ const ContentPreview = ({ content }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
+        position: "relative",
         backgroundImage: `url(${content.imageUrl})`,
         backgroundPosition: "center",
         backgroundColor: `${content.imageUrl ? null : randomColor}`,
@@ -56,6 +58,20 @@ const ContentPreview = ({ content }) => {
           content={content}
           onToggle={() => toggleAudio(audio, content)}
           audio={audio}
+        />
+      )}
+      {!content.imageUrl && (
+        <FontAwesomeIcon
+          style={{
+            position: "absolute ",
+            color: "#00",
+            top: "50%",
+            left: "50%",
+            opacity: 0.5,
+            transform: "translate(-50%, -50%)",
+          }}
+          size={"4x"}
+          icon={faPodcast}
         />
       )}
     </div>
