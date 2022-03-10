@@ -1,0 +1,28 @@
+.content-profile-container {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+
+  height: 90vh;
+  color: white;
+}
+.content-profile-image {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+  height: 100%;
+}
+
+.content-profile-control {
+  margin: 0 5px 0px 5px;
+}
+.content-profile-control:hover {
+  cursor: pointer;
+  color: #27ae60;
+}
+.content-profile-control.trash:hover {
+  cursor: pointer;
+  color: #e74c3c;
+}

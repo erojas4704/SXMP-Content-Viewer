@@ -56,6 +56,11 @@ export default class Api {
     return response.data;
   }
 
+  static async deleteContent(id) {
+    const response = await client.delete(`/content/${id}`);
+    return response.data;
+  }
+
   /**
    * Checks the bearer token to see if it's still valid.
    * If the token is valid, we keep it in the header.

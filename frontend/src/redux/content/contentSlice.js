@@ -8,6 +8,13 @@ export const searchForContent = createAsyncThunk(
   }
 );
 
+export const loadContent = createAsyncThunk(
+  "content/getContent",
+  async (id) => {
+    return await Api.getContent(id);
+  }
+);
+
 export const getAllContent = createAsyncThunk(
   "content/getAllContent",
   async () => {
@@ -19,6 +26,13 @@ export const reactToContent = createAsyncThunk(
   "content/reactToContent",
   async ({ contentId, rating, isFavorite }) => {
     return await Api.reactToContent(contentId, rating, isFavorite);
+  }
+);
+
+export const deleteContent = createAsyncThunk(
+  "content/deleteContent",
+  async (contentId) => {
+    return await Api.deleteContent(contentId);
   }
 );
 
@@ -106,6 +120,33 @@ export const contentSlice = createSlice({
 
         state.search = action.payload.map((o) => o.id);
         state.status = "fulfilled";
+      })
+      .addCase(deleteContent.pending, (state, action) => {
+        const contentId = action.meta.arg;
+        state.content[contentId].status = "pending";
+      })
+      .addCase(deleteContent.rejected, (state, action) => {
+        const contentId = action.meta.arg;
+        state.content[contentId].status = "error";
+        state.content[contentId].error = action.error;
+      })
+      .addCase(deleteContent.fulfilled, (state, action) => {
+        const { contentId } = action.meta.arg;
+        delete state.content[contentId];
+      })
+      .addCase(loadContent.pending, (state, action) => {
+        const id = action.meta.arg;
+        state.content[id].status = "pending";
+      })
+      .addCase(loadContent.rejected, (state, action) => {
+        const id = action.meta.arg;
+        state.content[id].status = "error";
+        state.content[id].error = action.payload;
+      })
+      .addCase(loadContent.fulfilled, (state, action) => {
+        const { id } = action.payload;
+        state.content[id] = action.payload;
+        state.content[id].status = "fulfilled";
       });
   },
 });
@@ -116,6 +157,10 @@ export const getContentArray = (state, doFilter = false) => {
     : Object.values(state.content.content);
 
   return contentArr;
+};
+
+export const getContent = (state, id) => {
+  return state.content.content[id];
 };
 
 export const { play, setSearchField, setSortBy } = contentSlice.actions;

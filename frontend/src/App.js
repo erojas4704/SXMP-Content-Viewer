@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Api from "./Api";
 import { store } from "./redux/store";
+import ContentProfile from "./components/ContentProfile";
 
 function App() {
   Api.setStore(store);
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/content/:id" element={<ContentProfile />} />
               </Routes>
             </div>
           </AudioPlayer>

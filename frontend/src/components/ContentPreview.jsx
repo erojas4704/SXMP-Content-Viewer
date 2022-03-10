@@ -5,6 +5,7 @@ import NowPlayingContext from "../contexts/NowPlayingContext";
 import useRandomColor from "../hooks/useRandomColor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPodcast } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const ContentPreview = ({ content }) => {
   //TODO rename to ContentPlayer
@@ -14,6 +15,7 @@ const ContentPreview = ({ content }) => {
   const [, setStatus] = useState("idle");
   const { toggleAudio } = useContext(NowPlayingContext);
   const randomColor = useRandomColor();
+  const navigate = useNavigate();
 
   const onMetadata = (e) => {
     setStatus("fulfilled");
@@ -33,6 +35,10 @@ const ContentPreview = ({ content }) => {
     }
   }, [expanded]);
 
+  const onContentPageClick = (id) => {
+    navigate(`/content/${id}`);
+  };
+
   return (
     <div
       className="content-preview"
@@ -47,11 +53,13 @@ const ContentPreview = ({ content }) => {
     >
       <div className="content-head" />
       <ContentDescription
+        id={content.id}
         title={content.title}
         description={content.description}
         expanded={expanded}
         onClick={() => setExpanded(!expanded)}
         hover={hover}
+        onContentPageClick={onContentPageClick}
       />
       {expanded && (
         <Playhead

@@ -16,6 +16,7 @@ import Timeline from "./Timeline";
 import ToggleIconButton from "./ToggleIconButton";
 
 const Playhead = (props) => {
+  //TODO refactor. The playhead should be self-sufficient.
   const { onToggle, audio, content } = props;
   const isPlaying = audio && !audio.paused;
   const { currentTime, duration } = audio || {};

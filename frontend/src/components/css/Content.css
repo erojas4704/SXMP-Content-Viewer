@@ -6,6 +6,7 @@
   flex-direction: column;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   margin: 0 0 1px 1px;
   /* cursor: pointer; */
 }
@@ -30,6 +31,9 @@
   font-weight: bold;
   font-size: 18px;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .content-description {
@@ -68,4 +72,13 @@
 .content-page {
   display: "flex";
   flex-wrap: "wrap";
+}
+
+.content-profile-link {
+  padding: 4px;
+}
+
+.content-profile-link:hover {
+  color: #f1c40f;
+  cursor: pointer;
 }
