@@ -23,13 +23,36 @@ export default class Api {
     return response.data;
   }
 
+  /**
+   * Retrieves all content from the backend.
+   * @returns {Promise<Content>} A promise that will return all the content that's stored in our backend.
+   */
   static async getAllContent() {
     const response = await client.get("/content");
     return response.data;
   }
 
+  /**
+   * Retrieves content by ID from the backend.
+   * @param {Number} id The id of the content to retrieve.
+   * @returns {Promise<Content>} A promise that will return the content with the given id.
+   */
   static async getContent(id) {
     const response = await client.get(`/content/${id}`);
+    return response.data;
+  }
+
+  /**
+   * Searches for content in the backend.
+   * @param {String} term The search term.
+   * @param {Promise<Array>} content An array of all the content we've found.
+   */
+  static async searchForContent(term) {
+    const response = await client.get(`/content/search`, {
+      params: {
+        term,
+      },
+    });
     return response.data;
   }
 

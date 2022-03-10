@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../Api";
 
+export const searchForContent = createAsyncThunk(
+  "content/searchForContent",
+  async (query) => {
+    return await Api.searchForContent(query);
+  }
+);
+
 export const getAllContent = createAsyncThunk(
   "content/getAllContent",
   async () => {
@@ -19,6 +26,7 @@ export const contentSlice = createSlice({
   name: "content",
   initialState: {
     content: {},
+    search: null,
     status: "idle",
     nowPlaying: null,
   },
@@ -47,7 +55,7 @@ export const contentSlice = createSlice({
         content.rating = rating || content.rating;
         if (rating > 0) content.likes++;
         else if (rating < 0) content.dislikes++;
-        
+
         content.isFavorite =
           isFavorite !== null ? isFavorite : content.isFavorite;
         content.status = "pending";
@@ -60,10 +68,29 @@ export const contentSlice = createSlice({
       .addCase(reactToContent.fulfilled, (state, action) => {
         const { contentId } = action.meta.arg;
         state.content[contentId] = action.payload;
+      })
+      .addCase(searchForContent.pending, (state, action) => {
+        state.status = "pending";
+        state.search = null;
+      })
+      .addCase(searchForContent.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.payload;
+      })
+      .addCase(searchForContent.fulfilled, (state, action) => {
+        //Merge search results with current content.
+        state.current = action.payload.reduce((acc, curr) => {
+          acc[curr.id] = curr;
+          return acc;
+        }, {...state.current});
+
+        state.search = action.payload;
+        state.status = "fulfilled";
       });
   },
 });
 
 export const getContentArray = (state) => Object.values(state.content.content);
+
 export const { play } = contentSlice.actions;
 export default contentSlice.reducer;

@@ -30,8 +30,11 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
-      state.status =  "idle";
-    }
+      state.status = "idle";
+    },
+    cancelLogin: (state) => {
+      state.status = "idle";
+    },
   },
   extraReducers(builder) {
     builder
@@ -73,5 +76,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, cancelLogin } = authSlice.actions;
 export default authSlice.reducer;

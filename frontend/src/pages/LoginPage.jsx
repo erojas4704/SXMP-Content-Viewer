@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../redux/auth/authSlice";
+import { cancelLogin, login } from "../redux/auth/authSlice";
 import "./css/FormPage.css";
 
 //TODO address lots of repetition in this file and RegisterPage.jsx
@@ -10,11 +10,14 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuthenticated, error, status }   = useSelector((state) => state.auth);
+  const { isAuthenticated, error, status } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (isAuthenticated) navigate("/");
+    return () => {
+      dispatch(cancelLogin());
+    };
   }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
@@ -66,7 +69,7 @@ const LoginPage = () => {
                 </Link>
               </div>
             ) : (
-              <Spinner style={{marginTop: "1rem"}} animation="border"/>
+              <Spinner style={{ marginTop: "1rem" }} animation="border" />
             )}
           </Form>
         </Col>

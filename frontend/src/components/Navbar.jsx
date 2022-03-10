@@ -4,6 +4,7 @@ import InlineSearchForm from "./InlineSearchForm";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/auth/authSlice";
+import { searchForContent } from "../redux/content/contentSlice";
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -11,8 +12,12 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    console.log("OUT");
   };
+  
+  const onSearch = (query) => {
+    console.log(query);
+    dispatch(searchForContent(query));
+  }
 
   return (
     <div className="nav">
@@ -20,7 +25,7 @@ const Navbar = () => {
         <NavButton>SXMP</NavButton>
       </Link>
       <div style={{ flexGrow: 1 }} />
-      <InlineSearchForm />
+      <InlineSearchForm onSubmit={onSearch}/>
       {!isAuthenticated ? (
         <>
           <Link to={{ pathname: "/login" }}>

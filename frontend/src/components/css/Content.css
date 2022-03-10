@@ -64,3 +64,8 @@
   height: 5px;
   transition: all 0.15s linear;
 }
+
+.content-page {
+  display: "flex";
+  flex-wrap: "wrap";
+}
