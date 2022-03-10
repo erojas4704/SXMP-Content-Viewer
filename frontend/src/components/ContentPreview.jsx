@@ -2,31 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import ContentDescription from "./ContentDescription";
 import Playhead from "./Playhead";
 import NowPlayingContext from "../contexts/NowPlayingContext";
+import useRandomColor from "../hooks/useRandomColor";
 
-const placeholderColors = [
-  "#34495e",
-  "#2c3e50",
-  "#e74c3c",
-  "#e67e22",
-  "#f1c40f",
-  "#f39c12",
-  "#1abc9c",
-  "#3498db",
-];
-
-const getRandomColor = () => {
-  const i = Math.floor(Math.random() * placeholderColors.length);
-  return placeholderColors[i];
-};
 
 const ContentPreview = ({ content }) => {
   //TODO rename to ContentPlayer
   const [expanded, setExpanded] = useState(false);
   const [hover, setHover] = useState(false);
   const [audio, setAudio] = useState(null);
-  const [status, setStatus] = useState("idle");
-
+  const [, setStatus] = useState("idle");
   const { toggleAudio } = useContext(NowPlayingContext);
+  const randomColor = useRandomColor();
 
   const onMetadata = (e) => {
     setStatus("fulfilled");
@@ -54,7 +40,7 @@ const ContentPreview = ({ content }) => {
       style={{
         backgroundImage: `url(${content.imageUrl})`,
         backgroundPosition: "center",
-        backgroundColor: `${content.imageUrl ? null : getRandomColor()}`,
+        backgroundColor: `${content.imageUrl ? null : randomColor}`,
       }}
     >
       <div className="content-head" />
