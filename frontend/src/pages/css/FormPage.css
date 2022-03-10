@@ -13,12 +13,25 @@
   width: 100%;
 }
 
+.spaced-form {
+  padding: 1rem;
+  min-height: 700px;
+  margin: 4rem;
+}
+.spaced-form div {
+  margin-bottom: 1rem;
+}
+
 @media only screen and (max-width: 768px) {
   .form-container {
     justify-content: start;
   }
 
   .form-page {
+    margin: 0;
+  }
+
+  .spaced-form {
     margin: 0;
   }
 }

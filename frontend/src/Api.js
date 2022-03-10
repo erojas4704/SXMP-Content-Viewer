@@ -9,13 +9,8 @@ export const client = axios.create({
 
 export default class Api {
   static async createContent(content) {
-    try {
-      const response = await client.post("/content", content);
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return err;
-    }
+    const response = await client.post("/content", content);
+    return response.data;
   }
 
   static async updateContent(id, content) {

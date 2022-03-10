@@ -82,7 +82,7 @@ const ContentProfile = () => {
               size={"xl"}
               icon={faEdit}
               color="white"
-              onClick={() => navigate(`/content/${id}/edit`)}
+              onClick={() => navigate(`/content/${id}/update`)}
             />
             <FontAwesomeIcon
               className="content-profile-control trash"
