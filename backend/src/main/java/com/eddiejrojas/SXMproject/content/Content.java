@@ -19,10 +19,8 @@ public class Content {
     private String description;
     private String name;
     private String source;
-    @JsonProperty("audioUrl")
-    private String audioURL;
-    @JsonProperty("imageUrl")
-    private String imageURL;
+    private String audioUrl;
+    private String imageUrl;
 
     public Content() {
     }
@@ -32,8 +30,8 @@ public class Content {
         this.name = name;
         this.description = description;
         this.source = source;
-        this.audioURL = audioURL;
-        this.imageURL = imageURL;
+        this.audioUrl = audioURL;
+        this.imageUrl = imageURL;
     }
 
     public Long getId() {
@@ -69,19 +67,19 @@ public class Content {
     }
 
     public String getAudioURL() {
-        return this.audioURL;
+        return this.audioUrl;
     }
 
     public void setAudioURL(String value) {
-        this.audioURL = value;
+        this.audioUrl = value;
     }
 
     public String getImageURL() {
-        return this.imageURL;
+        return this.imageUrl;
     }
 
     public void setImageURL(String value) {
-        this.imageURL = value;
+        this.imageUrl = value;
     }
 
     public String getName() {
