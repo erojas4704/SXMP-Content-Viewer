@@ -31,10 +31,22 @@ public class ContentService {
      * @param searchTerm
      * @return A list of content that matches the search term.
      */
-    public List<Content> searchContent(Long userId, String searchTerm) throws IOException {
+    public List<UserContent> searchContent(Long userId, String searchTerm) throws IOException {
         List<Content> content = api.searchPodcasts(searchTerm);
         contentRepository.saveAll(content);
-        return content;
+        // Map the content to the user's reactions, if the user exists
+        return content.stream()
+                .map(c -> {
+                    Reaction reaction = reactionRepository.findByUserIdAndContentId(userId, c.getId());
+                    if (reaction == null)
+                        return new UserContent(c);
+
+                    UserContent userContent = new UserContent(c, reaction);
+                    userContent.setLikes(contentRepository.getLikesForContent(c.getId()));
+                    userContent.setDislikes(contentRepository.getDislikesForContent(c.getId()));
+                    return userContent;
+                })
+                .toList();
     }
 
     /**

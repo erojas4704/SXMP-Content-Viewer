@@ -111,7 +111,7 @@ class ContentController {
     ResponseEntity<?> search(User user, @RequestParam String term) {
         try {
             Long userId = user == null ? -1 : user.getId();
-            List<Content> content = contentService.searchContent(userId, term);
+            List<UserContent> content = contentService.searchContent(userId, term);
             return ResponseEntity.ok().body(content);
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
