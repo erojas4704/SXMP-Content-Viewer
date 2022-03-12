@@ -1,7 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ContentPage from "./components/ContentPage";
-import Navbar from "./components/Navbar";
 import AudioPlayer from "./components/AudioPlayer";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
@@ -11,6 +10,7 @@ import ContentForm from "./pages/ContentForm";
 import ContentProfile from "./pages/ContentProfile";
 import Api from "./Api";
 import { store } from "./redux/store";
+import SXMPNavbar from "./components/SXMPNavbar";
 
 function App() {
   Api.setStore(store);
@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <div>
         <Router>
-          <Navbar />
+          <SXMPNavbar />
           <AudioPlayer>
             <div className="main">
               <Routes>
