@@ -1,23 +1,21 @@
 package com.eddiejrojas.sxmproject.security;
 
 import com.eddiejrojas.sxmproject.model.User;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JWTUtils {
     @Value("${jwt.secret}")
     private String secret;
+
     @Value("${jwt.expires.minutes}")
     private int JWT_TOKEN_EXPIRES_MINUTES;
 
@@ -54,14 +52,18 @@ public class JWTUtils {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_EXPIRES_MINUTES * 60000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .setExpiration(
+                        new Date(System.currentTimeMillis() + JWT_TOKEN_EXPIRES_MINUTES * 60000))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     public Boolean validateToken(String token, User userDetails) {
         // TODO figure out how this actually verifies the validity of the token.
-        final String username = getUsernameFromToken(token); // TODO try to make it make sense semantically. As we refer
-                                                             // to emails as usernames.
+        final String username =
+                getUsernameFromToken(
+                        token); // TODO try to make it make sense semantically. As we refer
+        // to emails as usernames.
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

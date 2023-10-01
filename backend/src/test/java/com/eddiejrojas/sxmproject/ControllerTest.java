@@ -7,12 +7,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class ControllerTest {
-    @MockBean
-    protected JWTUtils jwtUtils;
-    @MockBean
-    protected UserRepository userRepository;
-    @MockBean
-    protected UserDetailsService userDetailsService;
-    @MockBean
-    protected ContentRepository contentRepository;
+    @MockBean protected JWTUtils jwtUtils;
+    @MockBean protected UserRepository userRepository;
+    @MockBean protected UserDetailsService userDetailsService;
+    @MockBean protected ContentRepository contentRepository;
 }

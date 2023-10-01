@@ -1,8 +1,7 @@
 package com.eddiejrojas.sxmproject.config;
 
-import java.util.List;
-
 import com.eddiejrojas.sxmproject.security.UserArgumentResolver;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

@@ -1,23 +1,17 @@
 package com.eddiejrojas.sxmproject.integration;
 
-import java.io.IOException;
-
-import java.util.List;
-
-import com.eddiejrojas.sxmproject.dto.PodchaserAuthDTO;
 import com.eddiejrojas.sxmproject.dto.PodcastDTO;
+import com.eddiejrojas.sxmproject.dto.PodchaserAuthDTO;
 import com.eddiejrojas.sxmproject.model.Content;
-
-import lombok.NoArgsConstructor;
+import jakarta.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-
-import jakarta.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * This class is a client that handles all the logic for calling the external
@@ -25,24 +19,27 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-@NoArgsConstructor
 public class Podchaser {
     @Value("${api.client.id}")
     private String apiId;
+
     @Value("${api.client.secret}")
     private String apiSecret;
+
     @Value("${api.url}")
     private String apiUrl;
 
+    private PodchaserClient podchaserClient;
     private String accessToken;
-    private PodchaserClient podcastClient;
 
+    public Podchaser(PodchaserClient podchaserClient) {
+        this.podchaserClient = podchaserClient;
+    }
 
     public List<Content> searchPodcasts(String searchTerm) throws IOException {
-        PodcastDTO pto = podcastClient.searchPodcasts(searchTerm, accessToken);
+        PodcastDTO pto = podchaserClient.searchPodcasts(searchTerm, accessToken);
 
-        return pto.getPodcasts()
-                .stream()
+        return pto.getPodcasts().stream()
                 .map(o -> o.getEpisodes())
                 .flatMap(x -> x.stream())
                 .toList();
@@ -55,15 +52,17 @@ public class Podchaser {
         String variables = GraphqlSchemaReaderUtil.getSchemaFromFileName("variables");
         GraphqlRequestBody graphQLRequestBody = new GraphqlRequestBody();
         graphQLRequestBody.setQuery(query);
-        graphQLRequestBody.setVariables(variables.replace("id", apiId).replace("secret", apiSecret));
+        graphQLRequestBody.setVariables(
+                variables.replace("id", apiId).replace("secret", apiSecret));
 
         try {
-            PodchaserAuthDTO data = client.post()
-                    .uri("")
-                    .bodyValue(graphQLRequestBody)
-                    .retrieve()
-                    .bodyToMono(PodchaserAuthDTO.class)
-                    .block();
+            PodchaserAuthDTO data =
+                    client.post()
+                            .uri("")
+                            .bodyValue(graphQLRequestBody)
+                            .retrieve()
+                            .bodyToMono(PodchaserAuthDTO.class)
+                            .block();
 
             this.accessToken = data.getAccessToken();
         } catch (WebClientResponseException err) {

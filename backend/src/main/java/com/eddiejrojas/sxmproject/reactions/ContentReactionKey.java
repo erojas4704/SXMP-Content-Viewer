@@ -1,8 +1,8 @@
 package com.eddiejrojas.sxmproject.reactions;
 
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
-import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +16,7 @@ public class ContentReactionKey implements Serializable {
     public Long getContentId() {
         return contentId;
     }
+
     public void setContentId(Long contentId) {
         this.contentId = contentId;
     }
@@ -33,7 +34,8 @@ public class ContentReactionKey implements Serializable {
         if (this == o) return true;
         if (!(o instanceof ContentReactionKey)) return false;
         ContentReactionKey that = (ContentReactionKey) o;
-        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getContentId(), that.getContentId());
+        return Objects.equals(getUserId(), that.getUserId())
+                && Objects.equals(getContentId(), that.getContentId());
     }
 
     @Override

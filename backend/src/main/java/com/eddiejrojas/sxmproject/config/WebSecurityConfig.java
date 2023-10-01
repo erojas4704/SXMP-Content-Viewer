@@ -21,11 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private JWTFilter jwtFilter;
+    @Autowired private JWTFilter jwtFilter;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    @Autowired private UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -50,11 +48,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/content").permitAll()
-                .antMatchers(HttpMethod.GET, "/content/**").permitAll()
-                .anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/auth/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/content")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/content/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .and()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

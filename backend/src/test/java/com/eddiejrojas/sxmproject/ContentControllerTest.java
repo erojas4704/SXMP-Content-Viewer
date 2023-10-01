@@ -16,17 +16,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest(ContentController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class ContentControllerTest extends ControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    private ContentService contentService;
-
+    @Autowired private MockMvc mockMvc;
+    @MockBean private ContentService contentService;
 
     @Test
     public void testGetContentById_NotFound() throws Exception {
         Long badId = 999L;
 
-        Mockito.when(contentService.one(null, badId)).thenThrow(new ContentNotFoundException(badId));
+        Mockito.when(contentService.one(null, badId))
+                .thenThrow(new ContentNotFoundException(badId));
         mockMvc.perform(MockMvcRequestBuilders.get("/content/{id}", badId))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andReturn();

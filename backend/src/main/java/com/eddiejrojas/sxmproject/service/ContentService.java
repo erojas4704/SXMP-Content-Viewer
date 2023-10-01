@@ -1,22 +1,20 @@
 package com.eddiejrojas.sxmproject.service;
 
+import com.eddiejrojas.sxmproject.dto.ContentDTO;
+import com.eddiejrojas.sxmproject.dto.UserContentDTO;
+import com.eddiejrojas.sxmproject.integration.Podchaser;
+import com.eddiejrojas.sxmproject.model.Content;
+import com.eddiejrojas.sxmproject.model.Reaction;
+import com.eddiejrojas.sxmproject.model.User;
+import com.eddiejrojas.sxmproject.reactions.ContentReactionKey;
+import com.eddiejrojas.sxmproject.repository.ContentRepository;
+import com.eddiejrojas.sxmproject.repository.ReactionRepository;
+import com.eddiejrojas.sxmproject.service.exception.ContentNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.eddiejrojas.sxmproject.dto.ContentDTO;
-import com.eddiejrojas.sxmproject.integration.Podchaser;
-import com.eddiejrojas.sxmproject.model.User;
-import com.eddiejrojas.sxmproject.dto.UserContentDTO;
-import com.eddiejrojas.sxmproject.model.Content;
-import com.eddiejrojas.sxmproject.reactions.ContentReactionKey;
-import com.eddiejrojas.sxmproject.model.Reaction;
-import com.eddiejrojas.sxmproject.repository.ContentRepository;
-import com.eddiejrojas.sxmproject.repository.ReactionRepository;
-
-import com.eddiejrojas.sxmproject.service.exception.ContentNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,16 +38,19 @@ public class ContentService {
         contentRepository.saveAll(content);
         // Map the content to the user's reactions, if the user exists
         return content.stream()
-                .map(c -> {
-                    Reaction reaction = reactionRepository.findByUserIdAndContentId(userId, c.getId());
-                    if (reaction == null)
-                        return new UserContentDTO(c);
+                .map(
+                        c -> {
+                            Reaction reaction =
+                                    reactionRepository.findByUserIdAndContentId(userId, c.getId());
+                            if (reaction == null) return new UserContentDTO(c);
 
-                    UserContentDTO userContentDTO = new UserContentDTO(c, reaction);
-                    userContentDTO.setLikes(contentRepository.getLikesForContent(c.getId()));
-                    userContentDTO.setDislikes(contentRepository.getDislikesForContent(c.getId()));
-                    return userContentDTO;
-                })
+                            UserContentDTO userContentDTO = new UserContentDTO(c, reaction);
+                            userContentDTO.setLikes(
+                                    contentRepository.getLikesForContent(c.getId()));
+                            userContentDTO.setDislikes(
+                                    contentRepository.getDislikesForContent(c.getId()));
+                            return userContentDTO;
+                        })
                 .toList();
     }
 
@@ -62,8 +63,8 @@ public class ContentService {
      * as the reactions of other users.
      */
     public UserContentDTO findContent(Long userId, Long id) {
-        Content content = contentRepository.findById(id)
-                .orElseThrow(() -> new ContentNotFoundException(id));
+        Content content =
+                contentRepository.findById(id).orElseThrow(() -> new ContentNotFoundException(id));
 
         // TODO repetition here. This method can be extracted and condensed.
         Reaction reaction = reactionRepository.findByUserIdAndContentId(userId, content.getId());
@@ -84,41 +85,46 @@ public class ContentService {
         List<Content> content = contentRepository.findAll();
 
         if (userId == -1) {
-            return content.stream()
-                    .map(c -> new UserContentDTO(c))
-                    .collect(Collectors.toList());
+            return content.stream().map(c -> new UserContentDTO(c)).collect(Collectors.toList());
         }
 
         // TODO pagination support.
-        Map<Long, Reaction> reactions = reactionRepository.findAllByUserId(userId).stream().collect(
-                Collectors.toMap(Reaction::getContentId, Function.identity()));
+        Map<Long, Reaction> reactions =
+                reactionRepository.findAllByUserId(userId).stream()
+                        .collect(Collectors.toMap(Reaction::getContentId, Function.identity()));
 
         // TODO refactor. DRY
         return content.stream()
-                .map(c -> {
-                    Reaction reaction = reactions.get(c.getId());
-                    UserContentDTO userContentDTO = new UserContentDTO(c, reaction);
-                    userContentDTO.setLikes(contentRepository.getLikesForContent(c.getId()));
-                    userContentDTO.setDislikes(contentRepository.getDislikesForContent(c.getId()));
-                    return userContentDTO;
-                })
+                .map(
+                        c -> {
+                            Reaction reaction = reactions.get(c.getId());
+                            UserContentDTO userContentDTO = new UserContentDTO(c, reaction);
+                            userContentDTO.setLikes(
+                                    contentRepository.getLikesForContent(c.getId()));
+                            userContentDTO.setDislikes(
+                                    contentRepository.getDislikesForContent(c.getId()));
+                            return userContentDTO;
+                        })
                 .collect(Collectors.toList());
     }
 
     private Reaction getOrCreateReaction(Long userId, Long contentId) {
-        Reaction reaction = reactionRepository
-                .findById(new ContentReactionKey(userId, contentId))
-                .orElseGet(() -> {
-                    System.out.println("Creating new reaction");
-                    return new Reaction();
-                });
+        Reaction reaction =
+                reactionRepository
+                        .findById(new ContentReactionKey(userId, contentId))
+                        .orElseGet(
+                                () -> {
+                                    System.out.println("Creating new reaction");
+                                    return new Reaction();
+                                });
 
         return reaction;
     }
 
     public UserContentDTO createContent(Content newContent) {
         Long nextId = -contentRepository.getNextAvailableId();
-        //Since we're dealing with locally cached external API's, our content IDs will be negative for content produced in-house.
+        // Since we're dealing with locally cached external API's, our content IDs will be negative
+        // for content produced in-house.
         newContent.setId(nextId);
         return new UserContentDTO(contentRepository.save(newContent));
     }
@@ -145,24 +151,28 @@ public class ContentService {
     }
 
     public ContentDTO replaceContent(Content newContent, Long id) {
-        Content updatedContent = contentRepository.findById(id)
-                .map(content -> {
-                    content.setTitle(newContent.getTitle());
-                    content.setDescription(newContent.getDescription());
-                    content.setAudioUrl(newContent.getAudioUrl());
-                    content.setSource(newContent.getSource());
-                    content.setImageUrl(newContent.getImageUrl());
-                    return contentRepository.save(content);
-                })
-                .orElseGet(() -> {
-                    newContent.setId(id);
-                    return contentRepository.save(newContent);
-                });
+        Content updatedContent =
+                contentRepository
+                        .findById(id)
+                        .map(
+                                content -> {
+                                    content.setTitle(newContent.getTitle());
+                                    content.setDescription(newContent.getDescription());
+                                    content.setAudioUrl(newContent.getAudioUrl());
+                                    content.setSource(newContent.getSource());
+                                    content.setImageUrl(newContent.getImageUrl());
+                                    return contentRepository.save(content);
+                                })
+                        .orElseGet(
+                                () -> {
+                                    newContent.setId(id);
+                                    return contentRepository.save(newContent);
+                                });
 
         return mapToDTO(updatedContent);
     }
 
-    protected ContentDTO mapToDTO(Content content){
+    protected ContentDTO mapToDTO(Content content) {
         return ContentDTO.builder()
                 .name(content.getName())
                 .description(content.getDescription())

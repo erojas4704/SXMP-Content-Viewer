@@ -20,7 +20,6 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
 
-
     public AuthorizationDTO register(User registerUser) {
         // TODO appropriate error handling with detailed feedback for redundant users
         registerUser.setPassword(passwordEncoder.encode(registerUser.getPassword()));
@@ -35,9 +34,13 @@ public class AuthService {
 
     public AuthorizationDTO login(LoginCredentialsDTO loginCredentialsDTO) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginCredentialsDTO.getUsername(), loginCredentialsDTO.getPassword()));
-        User user = userRepository.findByUsername(loginCredentialsDTO.getUsername())
-                .orElseThrow(() -> new UserNotFoundException(loginCredentialsDTO.getUsername()));
+                new UsernamePasswordAuthenticationToken(
+                        loginCredentialsDTO.getUsername(), loginCredentialsDTO.getPassword()));
+        User user =
+                userRepository
+                        .findByUsername(loginCredentialsDTO.getUsername())
+                        .orElseThrow(
+                                () -> new UserNotFoundException(loginCredentialsDTO.getUsername()));
 
         String token = jwtUtils.generateToken(user);
         AuthorizationDTO userAuth = new AuthorizationDTO();

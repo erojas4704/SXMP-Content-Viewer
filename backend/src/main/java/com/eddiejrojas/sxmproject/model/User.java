@@ -1,32 +1,37 @@
 package com.eddiejrojas.sxmproject.model;
 
 import jakarta.persistence.*;
+import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "handle") })
+@Table(
+        name = "users",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = "username"),
+            @UniqueConstraint(columnNames = "handle")
+        })
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String username;
+
     @Column(length = 128, nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String handle;
+
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
-    @Column
-    private String avatarURL;
+    @Column private String avatarURL;
 
-    public User() {
-    }
+    public User() {}
 
     public User(String username, String handle, String password) {
         this.username = username;

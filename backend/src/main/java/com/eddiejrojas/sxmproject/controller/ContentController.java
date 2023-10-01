@@ -1,18 +1,16 @@
 package com.eddiejrojas.sxmproject.controller;
 
 import com.eddiejrojas.sxmproject.dto.ContentDTO;
-import com.eddiejrojas.sxmproject.service.ContentService;
 import com.eddiejrojas.sxmproject.dto.UserContentDTO;
 import com.eddiejrojas.sxmproject.model.Content;
 import com.eddiejrojas.sxmproject.model.User;
-
 import com.eddiejrojas.sxmproject.repository.ContentRepository;
+import com.eddiejrojas.sxmproject.service.ContentService;
+import java.io.IOException;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/content")
@@ -61,7 +59,8 @@ public class ContentController {
         return contentService.userFavoritesContent(user.getId(), id, true);
     }
 
-    // TODO lots of duplicate code here. You can probably use some param trickery to condense these routes.
+    // TODO lots of duplicate code here. You can probably use some param trickery to condense these
+    // routes.
     @PutMapping("/{id}/unfavorite")
     UserContentDTO unfavoriteContent(User user, @PathVariable Long id) {
         return contentService.userFavoritesContent(user.getId(), id, false);
@@ -74,7 +73,7 @@ public class ContentController {
     }
 
     @GetMapping("/search")
-    List<UserContentDTO> search (User user, @RequestParam String term) {
+    List<UserContentDTO> search(User user, @RequestParam String term) {
         try {
             return contentService.searchContent(user.getId(), term);
         } catch (IOException e) {

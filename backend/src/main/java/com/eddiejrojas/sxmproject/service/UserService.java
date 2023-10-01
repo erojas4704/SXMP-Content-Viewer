@@ -3,16 +3,13 @@ package com.eddiejrojas.sxmproject.service;
 import com.eddiejrojas.sxmproject.dto.UserDTO;
 import com.eddiejrojas.sxmproject.model.User;
 import com.eddiejrojas.sxmproject.repository.UserRepository;
-
 import com.eddiejrojas.sxmproject.service.exception.UserNotFoundException;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -28,8 +25,10 @@ public class UserService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+        User user =
+                userRepository
+                        .findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         return user;
     }
 
@@ -40,9 +39,7 @@ public class UserService implements UserDetailsService {
 
     public List<UserDTO> all() {
         List<User> users = userRepository.findAll();
-        return users.stream()
-                .map(UserService::userToDTO)
-                .toList();
+        return users.stream().map(UserService::userToDTO).toList();
     }
 
     public static UserDTO userToDTO(User user) {
