@@ -50,7 +50,7 @@ const SXMPNavbar = () => {
   };
 
   return (
-    <Navbar bg="dark" expand="lg" collapseOnSelect className="p-0 ">
+    <Navbar bg="dark" expand="lg" collapseOnSelect className="p-0 " style={{position: "sticky", top: '0', zIndex: '9999'}}>
       <Navbar.Brand>
         <Link to={{ pathname: "/" }}>
           <NavButton className="nav-logo">SXMP</NavButton>
