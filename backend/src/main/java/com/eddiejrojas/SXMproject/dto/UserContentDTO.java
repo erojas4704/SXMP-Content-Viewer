@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
-//TODO consider making this into a simple DTO
+// TODO consider making this into a simple DTO
 /**
  * Subclass of content. This class contains an user's personal preferences
  * regarding a specific piece of content as well as other useful metadata that doesn't need to be persisted.
@@ -21,8 +21,7 @@ public class UserContentDTO extends Content {
     private int likes;
     private int dislikes;
 
-
-    public UserContentDTO(Content content){
+    public UserContentDTO(Content content) {
         BeanUtils.copyProperties(content, this);
     }
 

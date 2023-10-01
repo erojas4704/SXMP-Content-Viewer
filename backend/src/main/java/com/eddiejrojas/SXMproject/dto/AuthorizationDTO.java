@@ -1,7 +1,7 @@
 package com.eddiejrojas.sxmproject.dto;
 
-import lombok.*;
 import java.util.Date;
+import lombok.*;
 
 @Data
 @Getter
