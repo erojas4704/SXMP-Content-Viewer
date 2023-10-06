@@ -4,7 +4,6 @@ import com.eddiejrojas.sxmproject.dto.ContentDTO;
 import com.eddiejrojas.sxmproject.dto.UserContentDTO;
 import com.eddiejrojas.sxmproject.model.Content;
 import com.eddiejrojas.sxmproject.model.User;
-import com.eddiejrojas.sxmproject.repository.ContentRepository;
 import com.eddiejrojas.sxmproject.service.ContentService;
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/content")
 @AllArgsConstructor
 public class ContentController {
-    private final ContentRepository repository;
     ContentService contentService;
 
     @GetMapping("")
@@ -68,7 +66,7 @@ public class ContentController {
 
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteContent(@PathVariable Long id) {
-        repository.deleteById(id);
+        contentService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

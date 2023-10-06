@@ -13,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Content {
     @Id private Long id;
     private String title;

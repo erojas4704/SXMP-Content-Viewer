@@ -30,7 +30,8 @@ public class ContentService {
      * If the content does not exist in our local database, it is added.
      * Also searches the local database for content.
      *
-     * @param searchTerm
+     * @param userId ID of the calling user
+     * @param searchTerm The search term we're using to search for content.
      * @return A list of content that matches the search term.
      */
     public List<UserContentDTO> searchContent(Long userId, String searchTerm) throws IOException {
@@ -85,7 +86,7 @@ public class ContentService {
         List<Content> content = contentRepository.findAll();
 
         if (userId == -1) {
-            return content.stream().map(c -> new UserContentDTO(c)).collect(Collectors.toList());
+            return content.stream().map(UserContentDTO::new).collect(Collectors.toList());
         }
 
         // TODO pagination support.
@@ -109,16 +110,13 @@ public class ContentService {
     }
 
     private Reaction getOrCreateReaction(Long userId, Long contentId) {
-        Reaction reaction =
-                reactionRepository
-                        .findById(new ContentReactionKey(userId, contentId))
-                        .orElseGet(
-                                () -> {
-                                    System.out.println("Creating new reaction");
-                                    return new Reaction();
-                                });
-
-        return reaction;
+        return reactionRepository
+                .findById(new ContentReactionKey(userId, contentId))
+                .orElseGet(
+                        () -> {
+                            System.out.println("Creating new reaction");
+                            return new Reaction();
+                        });
     }
 
     public UserContentDTO createContent(Content newContent) {
@@ -186,7 +184,10 @@ public class ContentService {
 
     public UserContentDTO one(User user, Long id) {
         Long userId = user == null ? -1 : user.getId();
-        UserContentDTO content = findContent(userId, id);
-        return content;
+        return findContent(userId, id);
+    }
+
+    public void delete(Long id) {
+        contentRepository.deleteById(id);
     }
 }
