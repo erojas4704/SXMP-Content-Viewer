@@ -11,13 +11,27 @@
   z-index: 999;
 }
 
-.nav > *{
+.nav > * {
   height: 100%;
   align-self: center;
   margin: auto;
 }
 
-.nav-logo{
+.nav-logo {
   font-weight: bold;
   font-size: 1.5rem;
+}
+
+.sort-options-label {
+  margin-left: "2rem";
+  margin-right: "1rem";
+  display: "flex";
+  color: "white";
+  align-items: "center";
+}
+
+@media (max-width: 992) {
+  .sort-options-label {
+    display: none;
+  }
 }

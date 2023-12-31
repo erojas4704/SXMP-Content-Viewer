@@ -33,7 +33,7 @@ const ContentPreview = ({ content }) => {
         audio.removeEventListener("loadedmetadata", onMetadata);
       };
     }
-  }, [expanded]);
+  }, [expanded, audio, content.audioUrl]);
 
   const onContentPageClick = (id) => {
     navigate(`/content/${id}`);

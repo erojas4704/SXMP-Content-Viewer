@@ -14,3 +14,10 @@
     justify-content: center;
     margin: 0 2rem 0 2rem;
 }
+
+@media (max-width: 992) {
+    .inline-search-form {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}

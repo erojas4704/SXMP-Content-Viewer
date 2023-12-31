@@ -44,7 +44,7 @@ const ContentForm = (props) => {
     if (content && content.status === "fulfilled") {
       navigate(`/content/${content.id}`);
     }
-  }, [content]);
+  }, [content, navigate]);
 
   return (
     <Container fluid className="form-container  white">

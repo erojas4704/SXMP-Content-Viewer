@@ -13,6 +13,7 @@ const NavRadioButton = ({ children, value, selectedValue, onClick, ...props }) =
         height: "100%",
         paddingLeft: "1rem",
         paddingRight: "1rem",
+        lineHeight: "56px"
       }}
       onClick={() => onClick(value)}
     >

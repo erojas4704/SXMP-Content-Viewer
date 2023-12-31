@@ -73,7 +73,7 @@ public class ContentController {
     @GetMapping("/search")
     List<UserContentDTO> search(User user, @RequestParam String term) {
         try {
-            return contentService.searchContent(user.getId(), term);
+            return contentService.searchContent(user, term);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

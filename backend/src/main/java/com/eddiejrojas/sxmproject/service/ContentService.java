@@ -10,11 +10,13 @@ import com.eddiejrojas.sxmproject.reactions.ContentReactionKey;
 import com.eddiejrojas.sxmproject.repository.ContentRepository;
 import com.eddiejrojas.sxmproject.repository.ReactionRepository;
 import com.eddiejrojas.sxmproject.service.exception.ContentNotFoundException;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,20 +32,23 @@ public class ContentService {
      * If the content does not exist in our local database, it is added.
      * Also searches the local database for content.
      *
-     * @param userId ID of the calling user
+     * @param user The calling user
      * @param searchTerm The search term we're using to search for content.
      * @return A list of content that matches the search term.
      */
-    public List<UserContentDTO> searchContent(Long userId, String searchTerm) throws IOException {
+    public List<UserContentDTO> searchContent(User user, String searchTerm) throws IOException {
         List<Content> content = api.searchPodcasts(searchTerm);
         contentRepository.saveAll(content);
         // Map the content to the user's reactions, if the user exists
         return content.stream()
                 .map(
                         c -> {
-                            Reaction reaction =
-                                    reactionRepository.findByUserIdAndContentId(userId, c.getId());
-                            if (reaction == null) return new UserContentDTO(c);
+                            Reaction reaction = null;
+                            if (user != null) {
+                                reaction =
+                                        reactionRepository.findByUserIdAndContentId(user.getId(), c.getId());
+                                if (reaction == null) return new UserContentDTO(c);
+                            }
 
                             UserContentDTO userContentDTO = new UserContentDTO(c, reaction);
                             userContentDTO.setLikes(

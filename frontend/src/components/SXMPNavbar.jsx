@@ -10,13 +10,7 @@ import {
   setSortBy,
 } from "../redux/content/contentSlice";
 import { useEffect } from "react";
-import {
-  Container,
-  Dropdown,
-  DropdownButton,
-  Nav,
-  Navbar,
-} from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import NavRadioGroup from "./NavRadioGroup";
 import NavRadioButton from "./NavRadioButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,28 +44,37 @@ const SXMPNavbar = () => {
   };
 
   return (
-    <Navbar bg="dark" expand="lg" collapseOnSelect className="p-0 " style={{position: "sticky", top: '0', zIndex: '9999'}}>
+    <Navbar
+      bg="dark"
+      expand="lg"
+      collapseOnSelect
+      className="p-0 "
+      style={{ position: "sticky", top: "0", zIndex: "9999" }}
+    >
       <Navbar.Brand>
         <Link to={{ pathname: "/" }}>
           <NavButton className="nav-logo">SXMP</NavButton>
         </Link>
       </Navbar.Brand>
-      <Link style={{position: "absolute", left: '50%', transform: "translate(-50%)"}} to={{ pathname: "/content/create" }}>
+      <Link
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "33px",
+          transform: "translate(-50%, -50%)",
+        }}
+        to={{ pathname: "/content/create" }}
+      >
         <NavButton>
           <FontAwesomeIcon size="lg" icon={faPlusCircle} />
         </NavButton>
       </Link>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" className="navbar-dark" />
+      <Navbar.Toggle
+        aria-controls="responsive-navbar-nav"
+        className="navbar-dark"
+      />
       <Navbar.Collapse>
-        <div
-          style={{
-            marginLeft: "2rem",
-            marginRight: "1rem",
-            display: "flex",
-            color: "white",
-            alignItems: "center",
-          }}
-        >
+        <div className="sort-options-label">
           <span>Sort by: </span>
         </div>
         <NavRadioGroup

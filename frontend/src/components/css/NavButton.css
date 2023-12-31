@@ -11,6 +11,10 @@
     font-size: 12pt;
 }
 
+.nav-button.nav-radio{
+    line-height: 56px;
+}
+
 .nav-button:hover{
     transition: all .3s;
     background-color: #34495e;
